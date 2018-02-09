@@ -71,6 +71,10 @@ public class UserDTO implements Serializable{
 	public String toString() {
 		return "UserDTO [userId=" + userId + ", userName=" + userName + ", ini=" + ini +", cpr=" +cpr+", roles=" + roles + "]";
 	}
+	public String getActive() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
