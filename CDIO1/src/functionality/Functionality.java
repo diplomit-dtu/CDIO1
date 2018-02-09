@@ -43,7 +43,7 @@ public class Functionality implements IFunctionality {
 	@Override
 	public boolean createUser(String name, String cpr, String password, List<String> roles) {
 		/*
-		 * Createion of this object should probably be handled in the data layer.
+		 * Creation of this object should probably be handled in the data layer.
 		 */
 
 		try {
@@ -59,8 +59,8 @@ public class Functionality implements IFunctionality {
 			data.createUser(user);
 			return true;
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 			return false;
 		}
 	}
@@ -75,8 +75,8 @@ public class Functionality implements IFunctionality {
 			
 			return true;
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 			return false;
 		}
 	}
@@ -91,8 +91,8 @@ public class Functionality implements IFunctionality {
 			
 			return true;
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 			return false;
 		}
 	}
@@ -107,7 +107,6 @@ public class Functionality implements IFunctionality {
 			
 			return true;
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -115,14 +114,31 @@ public class Functionality implements IFunctionality {
 
 	@Override
 	public boolean updateRoles(int userid, List<String> roles) {
-		// TODO Auto-generated method stub
-		return false;
+		UserDTO user;
+		
+		try {
+			user = data.getUser(userid);
+			user.setRoles(roles);
+			
+			return true;
+		} catch (DALException e) {
+			e.printStackTrace();
+			
+			return false;
+		}
 	}
 
 	@Override
 	public boolean deleteUser(int userid) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			data.deleteUser(userid);
+			
+			return true;
+		} catch (DALException e) {
+			e.printStackTrace();
+			
+			return false;
+		}
 	}
 	
 	private int nextID() throws DALException {
