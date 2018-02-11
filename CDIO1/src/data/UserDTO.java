@@ -1,4 +1,4 @@
-package dto;
+package data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,12 +11,24 @@ public class UserDTO implements Serializable{
 	private String userName;                
 	private String ini;                 
 	private List<String> roles;
-	//TODO Add relevant fields
+	private String password;
+	private String cpr;
 	
 	public UserDTO() {
 		this.roles = new ArrayList<>();
 	}
-	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getCpr() {
+		return cpr;
+	}
+	public void setCpr(String cpr) {
+		this.cpr = cpr;
+	}
 	public int getUserId() {
 		return userId;
 	}
@@ -57,7 +69,11 @@ public class UserDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UserDTO [userId=" + userId + ", userName=" + userName + ", ini=" + ini + ", roles=" + roles + "]";
+		return "UserDTO [userId=" + userId + ", userName=" + userName + ", ini=" + ini +", cpr=" +cpr+", roles=" + roles + "]";
+	}
+	public String getActive() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

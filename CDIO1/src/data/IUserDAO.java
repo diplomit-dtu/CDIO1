@@ -1,7 +1,5 @@
-package dal;
+package data;
 import java.util.List;
-
-import dto.UserDTO;
 
 public interface IUserDAO {
 
@@ -12,10 +10,6 @@ public interface IUserDAO {
 	void deleteUser(int userId) throws DALException;
 	
 	public class DALException extends Exception {
-
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 7355418246336739229L;
 
 		public DALException(String msg, Throwable e) {
