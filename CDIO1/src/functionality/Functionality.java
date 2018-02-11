@@ -10,6 +10,15 @@ public class Functionality implements IFunctionality {
 
 	IUserDAO data;
 	
+	public static void main (String[] args) {
+		try {
+			System.out.println(initials("Jeppe Trip Kofoed"));
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public Functionality (IUserDAO data) {
 		this.data = data;
 	}
@@ -51,7 +60,7 @@ public class Functionality implements IFunctionality {
 			
 			user.setUserId(nextID());
 			user.setUserName(name);
-			user.setIni(initials());
+			user.setIni(initials(name));
 			user.setCpr(cpr);
 			user.setPassword(password);
 			user.setRoles(roles);
@@ -150,13 +159,19 @@ public class Functionality implements IFunctionality {
 		return id; 
 	}
 	
-	//TODO this.
-	private String initials() throws DALException {
-		String initials;
+	//Supposed to return the initials based on the input name.
+	private static String initials(String name) throws DALException {
+		String[] name_array = name.split(" ");
+		char[] char_ini = new char[name_array.length];
+		String ini;
 		
-		initials = "not_done";
+		for(int i = 0; i<name_array.length; i++) {
+				char_ini[i] = name_array[i].charAt(0);
+		}
+
+		ini = new String(char_ini);
 		
-		return initials;
+		return ini;
 	}
 
 }
