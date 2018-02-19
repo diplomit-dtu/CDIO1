@@ -4,7 +4,7 @@ import java.util.List;
 
 import data.IUserDAO;
 
-public class UserDAO implements IUserDAO{
+public class UserDBDAO implements IUserDAO{
 
 	@Override
 	public UserDTO getUser(int userId) throws DALException {

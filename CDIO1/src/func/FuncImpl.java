@@ -15,14 +15,14 @@ public class FuncImpl implements IFuncImpl{
 	}
 	
 	@Override
-	public UserDTO getUser() {
-		// TODO Auto-generated method stub
+	public UserDTO getUser(int userId) {
+		
 		return null;
 	}
 
 	@Override
 	public List<UserDTO> getUserList() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
