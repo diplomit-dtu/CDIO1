@@ -27,9 +27,13 @@ public class FuncImpl implements IFuncImpl{
 	}
 
 	@Override
-	public void createUser() {
-		// TODO Auto-generated method stub
-		
+	public void createUser(String userName, String ini, String cpr) {
+		int	userId;    
+		userName = userName;                
+		ini = ini;                 
+		List<String> roles;
+		cpr = cpr;
+		String password = createPass();
 	}
 
 	@Override
@@ -51,7 +55,10 @@ public class FuncImpl implements IFuncImpl{
 	}
 	
 	@Override
-	public void createPass() {
-		// TODO Auto-generated method stub
+	public String createPass() {
+		String pass = "test";
+		
+		return pass; 
+		
 	}
 }
