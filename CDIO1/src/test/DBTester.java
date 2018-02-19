@@ -3,9 +3,9 @@ package test;
 
 import java.util.List;
 
-import dal.IUserDAO;
-import dal.IUserDAO.DALException;
 import dal.UserDAODiscImpl;
+import data.IUserDAO;
+import data.IUserDAO.DALException;
 import dto.UserDTO;
 
 public class DBTester {
