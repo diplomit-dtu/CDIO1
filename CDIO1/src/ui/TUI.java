@@ -13,7 +13,7 @@ public class TUI implements IUI {
 
 	@Override
 	public void run() {
-		System.out.println("Welcome to Nameless Program! Please press a button to start:");
+		System.out.println("Velkommen!");
 		System.out.println("1");
 		System.out.println("2");
 		System.out.println("3");
@@ -35,10 +35,17 @@ public class TUI implements IUI {
 				System.out.println("2");
 				break;
 			case 3:
-				f.createUser();
+				System.out.println("Indtast dit burgernavn: ");
+				String userName = sc.nextLine();
+				System.out.println("Indtast dine initialer: ");
+				String ini = sc.nextLine();
+				System.out.println("Indtast dit CPR-nummer: ");
+				String cpr = sc.nextLine();
+				f.createUser(userName, ini, cpr);
 				System.out.println("3");
 				break;
 			case 4:
+				
 				f.updateUser();
 				System.out.println("4");
 				break;
