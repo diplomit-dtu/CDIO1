@@ -12,4 +12,5 @@ public interface IFuncImpl {
 	void updateUser(); // same concept
 	void deleteUser(); //same concept
 	void exit(); //Shuts down program
+	void createPass();
 }

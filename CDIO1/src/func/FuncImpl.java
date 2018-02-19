@@ -49,4 +49,9 @@ public class FuncImpl implements IFuncImpl{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void createPass() {
+		// TODO Auto-generated method stub
+	}
 }
