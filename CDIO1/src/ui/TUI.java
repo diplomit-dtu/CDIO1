@@ -27,7 +27,9 @@ public class TUI implements IUI {
 			int selection = sc.nextInt();
 			switch (selection) {
 			case 1: 
-				f.getUser();
+				int userId = sc.nextInt();
+				System.out.println("Indtast dit bruger ID: ");
+				f.getUser(userId);
 				System.out.println("1");
 				break;
 			case 2:
@@ -45,12 +47,15 @@ public class TUI implements IUI {
 				System.out.println("3");
 				break;
 			case 4:
-				
-				f.updateUser();
+				int userId = sc.nextInt();
+				System.out.println("Indtast dit bruger ID: ");
+				f.updateUser(userId);
 				System.out.println("4");
 				break;
 			case 5:
-				f.deleteUser();
+				int userId = sc.nextInt();
+				System.out.println("Indtast dit bruger ID: ");
+				f.deleteUser(userId);
 				System.out.println("5");
 				break;
 			case 6:
