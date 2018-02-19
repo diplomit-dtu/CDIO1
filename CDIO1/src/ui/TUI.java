@@ -139,31 +139,31 @@ public class TUI implements IUI {
 			Scanner sc = new Scanner(System.in);
 			int input = sc.nextInt();
 			switch(input) {
-			case 1:
+			case 1: //Admin
 				st = "Admin";
 				if(roller.contains(st))
 					System.out.println("Allerede tilføjet");
 				else roller.add(st);
 				break;
-			case 2:
+			case 2: //Foreman
 				st = "Foreman";
 				if(roller.contains(st))
 					System.out.println("Allerede tilføjet");
 				else roller.add(st);
 				break;
-			case 3:
+			case 3: //Pharmacist
 				st = "Pharmacist";
 				if(roller.contains(st))
 					System.out.println("Allerede tilføjet");
 				else roller.add(st);
 				break;
-			case 4:
+			case 4: //Operator
 				st = "Operator";
 				if(roller.contains(st))
 					System.out.println("Allerede tilføjet");
 				else roller.add(st);
 				break;
-			case 5:
+			case 5: //Exit
 				//TODO exit code.
 				run = false;
 				break;
