@@ -27,17 +27,13 @@ public class FuncImpl implements IFuncImpl{
 	}
 
 	@Override
-	public void createUser(String userName, String ini, List<String> roles1, String cpr) {
-		int	userId;    
-		userName = userName;                
-		ini = ini;                 
-		List<String> roles = roles1;
-		cpr = cpr;
+	public void createUser(String userName, String ini, String roles1, String cpr) {
+		int	userId;
 		String password = createPass();
 	}
 
 	@Override
-	public void updateUser(int userId, String userName, String ini, String roles, String cpr, String password) throws DALException {
+	public void updateUser(int userId, String userName, String ini, String roles, String cpr) throws DALException {
 		UserDTO user = getUser(userId);
 		if(user != null)
 		{
@@ -46,14 +42,12 @@ public class FuncImpl implements IFuncImpl{
 	}
 
 	@Override
-	public void deleteUser() {
-		// TODO Auto-generated method stub
-		
+	public void deleteUser(int userId) throws DALException {
+		d.deleteUser(userId);
 	}
 
 	@Override
 	public void exit() {
-		// TODO Auto-generated method stub
 		
 	}
 	
