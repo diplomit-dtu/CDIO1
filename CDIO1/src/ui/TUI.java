@@ -72,7 +72,7 @@ public class TUI implements IUI {
 					String ini4 = sc.nextLine();
 					break;
 				case 3: //Choose roles
-					String roles4 = sc.nextLine();
+//					String roles4 = sc.nextLine();
 					break;
 				case 4: //CPR number
 					String cpr4 = sc.nextLine();

@@ -12,5 +12,5 @@ public interface IFuncImpl {
 	void updateUser(int userId, String userName, String ini, String roles, String cpr /*String password (hvis vi vil kunne ændre)*/) throws DALException; // same concept
 	void deleteUser(int userId) throws DALException; //same concept
 	void exit(); //Shuts down program
-	String createPass();
+	String createPass(int len, String dic);
 }
