@@ -1,8 +1,8 @@
 CREATE TABLE personer (
 	userID int,
-	userName varchar(40), 
+	userName varchar(48), 
         ini varchar(6),
-        roles varchar(10),
+        roles varchar(36),
         cpr varchar(11),
         passwd varchar(64)
                         );
