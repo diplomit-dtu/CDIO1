@@ -1,15 +1,24 @@
 package data;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import connector01917.Connector;
+import daointerfaces01917.DALException;
 import data.IUserDAO;
+import dto01917.OperatoerDTO;
 
 public class UserDBDAO implements IUserDAO{
 
 	@Override
-	public UserDTO getUser(int userId) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDTO getUser(int userId) throws DALException {		
+		ResultSet rs = Connector.doQuery("SELECT * FROM personer WHERE userID = " + userId);
+	    try {
+	    	if (!rs.first()) throw new DALException("Personen med ID: " + userId + " findes ikke");
+	    	return new UserDTO (rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), rs.getString("roles"), rs.getString("cpr"), rs.getString("passwd"));
+	    }
+	    catch (SQLException e) {throw new DALException(e); }
 	}
 
 	@Override
