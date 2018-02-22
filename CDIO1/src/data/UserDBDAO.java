@@ -2,12 +2,9 @@ package data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-
-import connector01917.Connector;
-import daointerfaces01917.DALException;
 import data.IUserDAO;
-import dto01917.OperatoerDTO;
 
 public class UserDBDAO implements IUserDAO{
 
@@ -18,13 +15,23 @@ public class UserDBDAO implements IUserDAO{
 	    	if (!rs.first()) throw new DALException("Personen med ID: " + userId + " findes ikke");
 	    	return new UserDTO (rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), rs.getString("roles"), rs.getString("cpr"), rs.getString("passwd"));
 	    }
-	    catch (SQLException e) {throw new DALException(e); }
+	    catch (SQLException e) {throw new DALException(e.getMessage(), e); }
 	}
 
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
 		// TODO Auto-generated method stub
-		return null;
+		List<UserDTO> list = new ArrayList<UserDTO>();
+		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
+		try
+		{
+			while (rs.next()) 
+			{
+				list.add(new UserDTO(rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), rs.getString("roles"), rs.getString("cpr"), rs.getString("passwd")));
+			}
+		}
+		catch (SQLException e) { throw new DALException(e.getMessage(), e); }
+		return list;
 	}
 
 	@Override
