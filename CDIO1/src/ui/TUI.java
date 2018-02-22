@@ -2,6 +2,8 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import data.IUserDAO.DALException;
 import func.IFuncImpl;
 
 public class TUI implements IUI {
@@ -14,7 +16,7 @@ public class TUI implements IUI {
 	}
 
 	@Override
-	public void run() {
+	public void run() throws DALException {
 		System.out.println("Velkommen!");
 		System.out.println("1");
 		System.out.println("2");
@@ -25,7 +27,6 @@ public class TUI implements IUI {
 
 		boolean hasEnded = false;
 		while (!hasEnded) {
-			//TODO Fix input to only int
 			int selection = sc.nextInt();
 			switch (selection) {
 			case 1: //getUser
@@ -40,48 +41,55 @@ public class TUI implements IUI {
 				break;
 			case 3: //Create user
 				System.out.println("Indtast dit burgernavn: ");
-				String userName = sc.nextLine();
+				String userName3 = sc.nextLine();
 				System.out.println("Indtast dine initialer: ");
-				String ini = sc.nextLine();
+				String ini3 = sc.nextLine();
 				System.out.println("Indtast dit CPR-nummer: ");
-				String cpr = sc.nextLine();
-				f.createUser(userName, ini, cpr);
+				String roles3 = sc.nextLine();
+				System.out.println("Indtast din rolle: ");
+				String cpr3 = sc.nextLine();
+				f.createUser(userName3, ini3, roles3, cpr3);
 				System.out.println("3");
 				break;
 			case 4: //Update user.
 				System.out.println("Indtast dit bruger ID: ");
-				int userId = sc.nextInt();
+				int userId4 = sc.nextInt();
+				f.getUser(userId4);
 				System.out.println("Hvad vil du ændre?");
 				System.out.println("___________________________");
 				System.out.println("1: Brugernavn");
 				System.out.println("2: Initialer");
 				System.out.println("3: Roller");
 				System.out.println("4: CPR");
-				System.out.println("5: Kodeord");
+//				System.out.println("5: Kodeord");
 
 				int selection2 = sc.nextInt();
 				switch(selection2){
 				case 1: //Username
+					String userName4 = sc.nextLine();
 					break;
 				case 2: //Initails
+					String ini4 = sc.nextLine();
 					break;
 				case 3: //Choose roles
-					chooseRoles();
+					String roles4 = sc.nextLine();
 					break;
 				case 4: //CPR number
+					String cpr4 = sc.nextLine();
 					break;
-				case 5: //Password
-					break;
+//				case 5: //Password
+//					break;
 				default:
 					break;
+					f.updateUser(userId4, userName4, ini4, roles4, cpr4);
 				}
-				f.updateUser();
+
 				System.out.println("4");
 				break;
 			case 5: //Delete user
-				int userId = sc.nextInt();
+				int userId5 = sc.nextInt();
 				System.out.println("Indtast dit bruger ID: ");
-				f.deleteUser(userId);
+				f.deleteUser(userId5);
 				System.out.println("5");
 				break;
 			case 6: //Exit
@@ -98,37 +106,31 @@ public class TUI implements IUI {
 
 	@Override
 	public void scenario() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void createUser() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void updateUser() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void getUser() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void getUserList() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void deleteUser() {
-		// TODO Auto-generated method stub
 
 	}
 	public String chooseRoles() {

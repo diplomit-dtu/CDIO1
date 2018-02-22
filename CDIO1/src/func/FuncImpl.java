@@ -69,12 +69,10 @@ public class FuncImpl implements IFuncImpl{
 		{
 			this.d.deleteUser(userId);	
 		}
-		
 	}
 
 	@Override
 	public void exit() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -85,6 +83,7 @@ public class FuncImpl implements IFuncImpl{
 		return pass; 
 		
 	}
+
 	
 	//tostring
 }
