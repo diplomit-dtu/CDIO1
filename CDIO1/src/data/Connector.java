@@ -88,7 +88,7 @@ public class Connector
 			Statement s = conn.createStatement();
 			s.executeUpdate(strB.toString());
 			conn.close();
-		} 
+		}
 		catch (Exception e) {
 			System.err.println("Failed to Execute" + scriptFilePath +". The error is"+ e.getMessage());
 		} 
