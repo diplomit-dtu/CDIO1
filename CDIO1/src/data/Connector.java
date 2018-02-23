@@ -62,11 +62,12 @@ public class Connector
 					ClassNotFoundException, SQLException
 	{	
 		System.out.println("Before executeScpDB() method");
-		SQLReader st = new SQLReader();
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=");
-		Statement s = conn.createStatement();
-		st.tester(s);
-		//executeScpDB("../database_create.sql"); //calls function that automatically creates a database and two users
+//		SQLReader st = new SQLReader();
+//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=");
+//		Statement s = conn.createStatement();
+//		st.tester(s);
+		
+		executeScpDB("../database_create.sql"); //calls function that automatically creates a database and two users
 		//a bit redundant in terms of code optimization. but due to current code structure, doing a seperate call
 		
 		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database,
@@ -84,16 +85,23 @@ public class Connector
 		//in our case, a database creation and user creation so the db isn't empty.
 		try 
 		{
-			BufferedReader bfReader = new BufferedReader(new FileReader(scriptFilePath));
-			String str;
-			StringBuffer strB = new StringBuffer();
-			while ((str = bfReader.readLine()) != null) {
-				strB.append(str + "\n ");
-			}
-			bfReader.close();
+			
+
 			Connection conn = DriverManager.getConnection("jdbc:mysql://" + Constant.server + "/?user=" + Constant.username + "&password=" + Constant.password);
 			Statement s = conn.createStatement();
-			s.executeUpdate(strB.toString());
+			s.executeUpdate("CREATE DATABASE IF NOT EXISTS cdio_2Semester;");
+			s.executeUpdate("USE cdio_2Semester;");
+			s.executeUpdate("CREATE TABLE IF NOT EXISTS personer (\n" + 
+					"	userID int NOT NULL AUTO_INCREMENT,\n" + 
+					"	userName varchar(48), \n" + 
+					"        ini varchar(6),\n" + 
+					"        roles varchar(36),\n" + 
+					"        cpr varchar(11),\n" + 
+					"        passwd varchar(64),\n" + 
+					"        PRIMARY KEY (userID)\n" + 
+					"                        );");
+			s.executeUpdate("INSERT INTO personer(userName, ini, roles, cpr, passwd) VALUES\n" + 
+					"('test', 'tst', 'admin', '123456-8888', 'secure');");
 			conn.close();
 		}
 		catch (Exception e) {
