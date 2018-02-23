@@ -130,7 +130,7 @@ public class SQLReader
     	String pathname_01;
     	 
     	//... get queries from sql file .................
-    	        pathname_01 = "database_create.sql";
+    	        pathname_01 = "../database_create.sql";
     	        queries_01 = createQueries(pathname_01);
     	             
     	        PreparedStatement pps = null;
