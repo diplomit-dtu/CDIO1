@@ -22,7 +22,7 @@ public class UserDBDAO implements IUserDAO{
 	public List<UserDTO> getUserList() throws DALException {
 		// TODO Auto-generated method stub
 		List<UserDTO> list = new ArrayList<UserDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
+		ResultSet rs = Connector.doQuery("SELECT * FROM personer");
 		try
 		{
 			while (rs.next()) 
