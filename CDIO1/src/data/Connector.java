@@ -61,11 +61,13 @@ public class Connector
 				throws InstantiationException, IllegalAccessException,
 					ClassNotFoundException, SQLException
 	{	
-		executeScpDB("database_create.sql"); //calls function that automatically creates a database and two users
+		System.out.println("Before executeScpDB() method");
+		executeScpDB("../database_create.sql"); //calls function that automatically creates a database and two users
 		//a bit redundant in terms of code optimization. but due to current code structure, doing a seperate call
 		
 		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database,
 					username, password);
+		System.out.println("sucessfully initiated driver");
 		stm		= conn.createStatement();
 	}
 	
@@ -74,6 +76,7 @@ public class Connector
 	 */
 	public void executeScpDB(String scriptFilePath) throws SQLException
 	{
+		System.out.println("Executing script");
 		//in our case, a database creation and user creation so the db isn't empty.
 		try 
 		{
@@ -84,7 +87,7 @@ public class Connector
 				strB.append(str + "\n ");
 			}
 			bfReader.close();
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://" + Constant.server + "/?user=" + Constant.username + "&password=" + Constant.password);
 			Statement s = conn.createStatement();
 			s.executeUpdate(strB.toString());
 			conn.close();
@@ -92,6 +95,7 @@ public class Connector
 		catch (Exception e) {
 			System.err.println("Failed to Execute" + scriptFilePath +". The error is"+ e.getMessage());
 		} 
+		System.out.println("Succesfully executed script");
 	}
 	
 	/**
