@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import data.IUserDAO.DALException;
 import func.IFuncImpl;
 
@@ -19,12 +18,12 @@ public class TUI implements IUI {
 	@Override
 	public void run() throws DALException {
 		System.out.println("Velkommen!");
-		System.out.println("1"); 	//Get User
-		System.out.println("2");		//Get UserList
-		System.out.println("3");		//Create user
-		System.out.println("4");		//Update user
-		System.out.println("5");		//Delete user
-		System.out.println("6");		//Exit program
+		System.out.println("Find bruger"); 			//Get User
+		System.out.println("Udskriv alle brugere");	//Get UserList
+		System.out.println("Opret bruger");			//Create user
+		System.out.println("Rediger bruger");		//Update user
+		System.out.println("Slet bruger");			//Delete user
+		System.out.println("Afslut program");		//Exit program
 		Scanner sc = new Scanner(System.in);
 
 		boolean hasEnded = false;
@@ -35,11 +34,11 @@ public class TUI implements IUI {
 				int userId = sc.nextInt();
 				System.out.println("Indtast dit bruger ID: ");
 				f.getUser(userId);
-				System.out.println("1");
+				System.out.println("1"); //Only for test purposes
 				break;
 			case 2: //GetUserList
 				f.getUserList();
-				System.out.println("2");
+				System.out.println("2");	//Only for test purposes
 				break;
 			case 3: //Create user
 				System.out.println("Bruger oprettes...");
@@ -52,8 +51,8 @@ public class TUI implements IUI {
 				List<String> roles = Arrays.asList(roles3.split(", "));
 				System.out.println("Indtast dit CPR-nummer: ");
 				String cpr3 = sc.nextLine();
-				f.createUser(userName3, ini3, roles, cpr3);
-				System.out.println("3");
+				f.createUser(userName3, ini3, roles, cpr3);	//Creates a user with the inputted information
+				System.out.println("3");	//Only for test purposes
 				break;
 			case 4: //Update user.
 				System.out.println("Indtast dit bruger ID: ");
@@ -66,13 +65,14 @@ public class TUI implements IUI {
 				System.out.println("3: Roller");
 				System.out.println("4: CPR");
 //				System.out.println("5: Kodeord");
-
+				
+//				Setup for new switch case in update user.
 				int selection2 = sc.nextInt();
 				String userName4 = null;
 				String ini4 = null;
 				String cpr4 = null;
 				List<String> roles1 = null;
-				switch(selection2){
+				switch(selection2){		//Switch for the options 1 to 4 above.
 				case 1: //Username
 					userName4 = sc.nextLine();
 					break;
@@ -93,21 +93,21 @@ public class TUI implements IUI {
 				}
 				f.updateUser(userId4, userName4, ini4, roles1, cpr4);
 
-				System.out.println("4");
+				System.out.println("4");	//Only for test purposes
 				break;
 			case 5: //Delete user
 				int userId5 = sc.nextInt();
 				System.out.println("Indtast dit bruger ID: ");
 				f.deleteUser(userId5);
-				System.out.println("5");
+				System.out.println("5");	//Only for test purposes
 				break;
 			case 6: //Exit
 				f.exit();
 				hasEnded = true;
-				System.out.println("6");
+				System.out.println("6");	//Only for test purposes
 				break;
 			default: 
-				System.out.println("Default");
+				System.out.println("Default");	//Only for test purposes
 				break;
 			}
 		}
