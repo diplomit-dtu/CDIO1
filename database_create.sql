@@ -1,6 +1,6 @@
-CREATE DATABASE cdio_2Semester;
+CREATE DATABASE IF NOT EXISTS cdio_2Semester;
 USE cdio_2Semester;
-CREATE TABLE personer (
+CREATE TABLE IF NOT EXISTS personer (
 	userID int NOT NULL AUTO_INCREMENT,
 	userName varchar(48), 
         ini varchar(6),
