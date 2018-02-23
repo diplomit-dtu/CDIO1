@@ -182,6 +182,7 @@ public class TUI implements IUI {
 //		return null;
 //	}
 	public void menuOptions() {
+		System.out.println("---------------------------------"); 			//Get User
 		System.out.println("1: Find bruger"); 			//Get User
 		System.out.println("2: Udskriv alle brugere");	//Get UserList
 		System.out.println("3: Opret bruger");			//Create user
