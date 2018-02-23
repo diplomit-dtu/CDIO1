@@ -35,11 +35,13 @@ public class TUI implements IUI {
 				int userId = Integer.parseInt(sc.nextLine());
 				System.out.println(f.getUser(userId));
 //				System.out.println("1"); //Only for test purposes
+				menuOptions();
 				break;
 			case 2: //GetUserList
 				System.out.println("Printer liste...");
 				System.out.println(f.getUserList());
 //				System.out.println("2");	//Only for test purposes
+				menuOptions();
 				break;
 			case 3: //Create user
 				System.out.println("Bruger oprettes...");
@@ -55,6 +57,7 @@ public class TUI implements IUI {
 				f.createUser(userName3, ini3, roles, cpr3);	//Creates a user with the inputted information
 //				System.out.println("3");	//Only for test purposes
 				//TODO Display password
+				menuOptions();
 				break;
 			case 4: //Update user.
 				System.out.println("Indtast dit bruger ID: ");
@@ -82,12 +85,14 @@ public class TUI implements IUI {
 				f.updateUser(userId4, userName4, ini4, roles1, cpr4);
 
 //				System.out.println("4");	//Only for test purposes
+				menuOptions();
 				break;
 			case 5: //Delete user
 				System.out.println("Indtast bruger ID'et på den bruger du gerne vil slette: ");
 				int userId5 = Integer.parseInt(sc.nextLine());
 				f.deleteUser(userId5);
 				System.out.println("5");	//Only for test purposes
+				menuOptions();
 				break;
 			case 6: //Exit
 				System.out.println("Lukker ned...");
@@ -176,5 +181,12 @@ public class TUI implements IUI {
 //		}
 //		return null;
 //	}
-
+	public void menuOptions() {
+		System.out.println("1: Find bruger"); 			//Get User
+		System.out.println("2: Udskriv alle brugere");	//Get UserList
+		System.out.println("3: Opret bruger");			//Create user
+		System.out.println("4: Rediger bruger");			//Update user
+		System.out.println("5: Slet bruger");			//Delete user
+		System.out.println("6: Afslut program");			//Exit program
+	}
 }
