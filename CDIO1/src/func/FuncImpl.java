@@ -55,13 +55,11 @@ public class FuncImpl implements IFuncImpl{
 		// Updates the user by getting the user and then set the users attributes to the corresponding parameters.
 		// Roles is not implemented yet.
 		UserDTO user = getUser(userId);
-		if(user != null){
 			user.setUserName(userName);              
 			user.setIni(ini);
 			user.setRoles(roles);
 			user.setCpr(cpr);
 			this.d.updateUser(user);	
-		}
 	}
 
 	@Override
@@ -69,6 +67,7 @@ public class FuncImpl implements IFuncImpl{
 		// TODO Auto-generated method stub
 		// Deletes the user by getting the user and if the user exists then it calls the deleteUser method of the UserDBDAO.
 		UserDTO user = getUser(userId);
+//		System.out.println(user);
 		if(user != null)
 		{
 			this.d.deleteUser(userId);	

@@ -1,5 +1,8 @@
 package main;
 
+import java.sql.SQLException;
+
+import data.Connector;
 import data.IUserDAO;
 import data.IUserDAO.DALException;
 import data.UserDBDAO;
@@ -15,6 +18,11 @@ public class Main {
 		IUserDAO d = new UserDBDAO();
 		IFuncImpl f = new FuncImpl(d);
 		IUI i = new TUI(f);
+		try {
+			Connector ct = new Connector();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			System.out.println("failed at main");
+		}
 		i.run();
 	}
 

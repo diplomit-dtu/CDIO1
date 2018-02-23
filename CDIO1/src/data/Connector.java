@@ -100,8 +100,8 @@ public class Connector
 					"        passwd varchar(64),\n" + 
 					"        PRIMARY KEY (userID)\n" + 
 					"                        );");
-			s.executeUpdate("INSERT INTO personer(userName, ini, roles, cpr, passwd) VALUES\n" + 
-					"('test', 'tst', 'admin', '123456-8888', 'secure');");
+//			s.executeUpdate("INSERT INTO personer(userName, ini, roles, cpr, passwd) VALUES\n" + 
+//					"('test', 'tst', 'admin', '123456-8888', 'secure');");
 			conn.close();
 		}
 		catch (Exception e) {

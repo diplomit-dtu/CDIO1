@@ -12,8 +12,12 @@ public class UserDBDAO implements IUserDAO{
 	public UserDTO getUser(int userId) throws DALException {		
 		ResultSet rs = Connector.doQuery("SELECT * FROM personer WHERE userID = " + userId);
 	    try {
-	    	if (!rs.first()) throw new DALException("Personen med ID: " + userId + " findes ikke");
+	    
+	    	if (!rs.first()) throw new DALException("Personen med ID: " + userId + " findes ikke"); //rs.first() returns false if tuple doesn't exist,
+	    	// so it returns false and becomes true in the if statement and then throws exception
+	    	
 	    	return new UserDTO (rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), Arrays.asList(rs.getString("roles").split(", ")), rs.getString("cpr"), rs.getString("passwd"));
+	    
 	    }
 	    catch (SQLException e) {throw new DALException(e.getMessage(), e); }
 	}
@@ -22,7 +26,7 @@ public class UserDBDAO implements IUserDAO{
 	public List<UserDTO> getUserList() throws DALException {
 		// TODO Auto-generated method stub
 		List<UserDTO> list = new ArrayList<UserDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM operatoer");
+		ResultSet rs = Connector.doQuery("SELECT * FROM personer");
 		try
 		{
 			while (rs.next()) 
@@ -39,8 +43,12 @@ public class UserDBDAO implements IUserDAO{
 		// TODO Auto-generated method stub
 		Connector.doUpdate(	//NEEDS TO BE SETUP------------------------------------------------------------------------
 		"INSERT INTO personer(userName, ini, roles, cpr, passwd) VALUES " + 
-		"(" + user.getUserName() + "', '" + user.getIni() + 
-		"', '" + Arrays.toString(user.getRoles().toArray())  + "', '" + user.getCpr() + "', '" + user.getPassword() + "');"
+		"('" + user.getUserName() + "',"
+				+ " '" + user.getIni() + 
+		"',"
+		+ " '" + Arrays.toString(user.getRoles().toArray())  + "',"
+				+ " '" + user.getCpr() + "',"
+						+ " '" + user.getPassword() + "');"
 		);
 		
 		
