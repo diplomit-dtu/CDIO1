@@ -17,13 +17,13 @@ public class TUI implements IUI {
 
 	@Override
 	public void run() throws DALException {
-		System.out.println("Velkommen!");
-		System.out.println("Find bruger"); 			//Get User
-		System.out.println("Udskriv alle brugere");	//Get UserList
-		System.out.println("Opret bruger");			//Create user
-		System.out.println("Rediger bruger");		//Update user
-		System.out.println("Slet bruger");			//Delete user
-		System.out.println("Afslut program");		//Exit program
+		System.out.println("Velkommen! Tryk på det nummer der svarer til det menupunkt du gerne vil tilgå");
+		System.out.println("1: Find bruger"); 			//Get User
+		System.out.println("2: Udskriv alle brugere");	//Get UserList
+		System.out.println("3: Opret bruger");			//Create user
+		System.out.println("4: Rediger bruger");		//Update user
+		System.out.println("5: Slet bruger");			//Delete user
+		System.out.println("6: Afslut program");		//Exit program
 		Scanner sc = new Scanner(System.in);
 
 		boolean hasEnded = false;
@@ -43,14 +43,14 @@ public class TUI implements IUI {
 			case 3: //Create user
 				System.out.println("Bruger oprettes...");
 				System.out.println("Indtast dit burgernavn: ");
-				String userName3 = sc.nextLine();
+				String userName3 = sc.next();
 				System.out.println("Indtast dine initialer: ");
-				String ini3 = sc.nextLine();
+				String ini3 = sc.next();
 				System.out.println("Indtast din rolle(r), hvis du har flere så seperer med komma og mellemrum: ");
-				String roles3 = sc.nextLine();
+				String roles3 = sc.next();
 				List<String> roles = Arrays.asList(roles3.split(", "));
 				System.out.println("Indtast dit CPR-nummer: ");
-				String cpr3 = sc.nextLine();
+				String cpr3 = sc.next();
 				f.createUser(userName3, ini3, roles, cpr3);	//Creates a user with the inputted information
 				System.out.println("3");	//Only for test purposes
 				break;
