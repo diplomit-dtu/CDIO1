@@ -41,8 +41,7 @@ public class TUI implements IUI {
 				System.out.println("2");
 				break;
 			case 3: //Create user
-//				System.out.println("Indtast dit Id");
-				int userId3 = /*randomized database created userid*/;
+				System.out.println("Bruger oprettes...");
 				System.out.println("Indtast dit burgernavn: ");
 				String userName3 = sc.nextLine();
 				System.out.println("Indtast dine initialer: ");
@@ -51,7 +50,7 @@ public class TUI implements IUI {
 				String roles3 = sc.nextLine();
 				System.out.println("Indtast din rolle: ");
 				String cpr3 = sc.nextLine();
-				f.createUser(userId3, userName3, ini3, roles3, cpr3);
+				f.createUser(userName3, ini3, roles3, cpr3);
 				System.out.println("3");
 				break;
 			case 4: //Update user.

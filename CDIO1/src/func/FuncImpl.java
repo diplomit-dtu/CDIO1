@@ -37,11 +37,10 @@ public class FuncImpl implements IFuncImpl{
 	}
 
 	@Override
-	public void createUser(int userId, String userName, String ini, List<String> roles1, String cpr) throws DALException {
+	public void createUser(String userName, String ini, List<String> roles1, String cpr) throws DALException {
 		// Creates a UserDTO and sets the attributes to the corresponding parameters.
 		// Roles is not implemented yet.
 		this.dt = new UserDTO();    
-		this.dt.setUserId(userId);
 		this.dt.setUserName(userName);
 		this.dt.setIni(ini);
 		List<String> roles = roles1;
@@ -57,7 +56,6 @@ public class FuncImpl implements IFuncImpl{
 		// Roles is not implemented yet.
 		UserDTO user = getUser(userId);
 		if(user != null){
-			user.setUserId(userId);   
 			user.setUserName(userName);              
 			user.setIni(ini);
 			List<String> roles = role;
