@@ -38,8 +38,8 @@ public class UserDBDAO implements IUserDAO{
 	public void createUser(UserDTO user) throws DALException {
 		// TODO Auto-generated method stub
 		Connector.doUpdate(	//NEEDS TO BE SETUP------------------------------------------------------------------------
-		"INSERT INTO personer(userID, userName, ini, roles, cpr, passwd) VALUES " + 
-		"(" + user.getUserId() + ", '" + user.getUserName() + "', '" + user.getIni() + 
+		"INSERT INTO personer(userName, ini, roles, cpr, passwd) VALUES " + 
+		"(" + user.getUserName() + "', '" + user.getIni() + 
 		"', '" + Arrays.toString(user.getRoles().toArray())  + "', '" + user.getCpr() + "', '" + user.getPassword() + "');"
 		);
 		
@@ -51,7 +51,7 @@ public class UserDBDAO implements IUserDAO{
 		// TODO Auto-generated method stub
 		Connector.doUpdate(	//NEEDS TO BE SETUP------------------------------------------------------------------------
 				"UPDATE personer SET " + 
-				 "userID = '" + user.getUserId() + "', userName = '" + user.getUserName() + "', ini = '" + user.getIni() + "', " + 
+				 "userName = '" + user.getUserName() + "', ini = '" + user.getIni() + "', " + 
 				"roles = '" + Arrays.toString(user.getRoles().toArray()) + "', cpr ='" + user.getCpr() + "', passwd = '" + user.getPassword() + "'" + 
 				"WHERE userID = " + user.getUserId() + ";"
 				);
