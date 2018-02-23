@@ -189,4 +189,12 @@ public class TUI implements IUI {
 		}
 		return null;
 	}
+	public void menuOptions() {		//Shows the menu. Use at the end of a switch case.
+		System.out.println("1: Find bruger"); 			//Get User
+		System.out.println("2: Udskriv alle brugere");	//Get UserList
+		System.out.println("3: Opret bruger");			//Create user
+		System.out.println("4: Rediger bruger");			//Update user
+		System.out.println("5: Slet bruger");			//Delete user
+		System.out.println("6: Afslut program");			//Exit program
+	}
 }
