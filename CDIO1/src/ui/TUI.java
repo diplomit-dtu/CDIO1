@@ -18,11 +18,12 @@ public class TUI implements IUI {
 	@Override
 	public void run() throws DALException {
 		System.out.println("Velkommen!");
-		System.out.println("1");
-		System.out.println("2");
-		System.out.println("3");
-		System.out.println("4");
-		System.out.println("5");
+		System.out.println("1"); 	//Get User
+		System.out.println("2");		//Get UserList
+		System.out.println("3");		//Create user
+		System.out.println("4");		//Update user
+		System.out.println("5");		//Delete user
+		System.out.println("6");		//Exit program
 		Scanner sc = new Scanner(System.in);
 
 		boolean hasEnded = false;
