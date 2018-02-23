@@ -3,8 +3,8 @@ package data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import data.IUserDAO;
 
 public class UserDBDAO implements IUserDAO{
 
@@ -13,7 +13,7 @@ public class UserDBDAO implements IUserDAO{
 		ResultSet rs = Connector.doQuery("SELECT * FROM personer WHERE userID = " + userId);
 	    try {
 	    	if (!rs.first()) throw new DALException("Personen med ID: " + userId + " findes ikke");
-	    	return new UserDTO (rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), rs.getString("roles"), rs.getString("cpr"), rs.getString("passwd"));
+	    	return new UserDTO (rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), Arrays.asList(rs.getString("roles").split(", ")), rs.getString("cpr"), rs.getString("passwd"));
 	    }
 	    catch (SQLException e) {throw new DALException(e.getMessage(), e); }
 	}

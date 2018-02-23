@@ -18,12 +18,12 @@ public class UserDTO implements Serializable{
 		this.roles = new ArrayList<String>();
 	}
 	
-	public UserDTO(int userId, String userName, String ini, String roles, String cpr, String password) {
+	public UserDTO(int userId, String userName, String ini, List<String> roles, String cpr, String password) {
 		// TODO Auto-generated constructor stub
 		this.userId = userId;
 		this.userName = userName;
 		this.ini = ini;
-		this.addRole(roles);		//Only adds one role
+		this.roles = roles;		//Only adds one role
 		this.cpr = cpr;
 		this.password = password;
 	}
