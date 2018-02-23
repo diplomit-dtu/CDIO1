@@ -16,14 +16,14 @@ public class TUI implements IUI {
 	}
 
 	@Override
-	public void run() throws DALException {
-		System.out.println("Velkommen! Tryk på det nummer der svarer til det menupunkt du gerne vil tilgå");
+	public void run() throws DALException { //Displays welcome screen 
+		System.out.println("Velkommen! Tryk på det tal, der svarer til det menupunkt du gerne vil tilgå");
 		System.out.println("1: Find bruger"); 			//Get User
 		System.out.println("2: Udskriv alle brugere");	//Get UserList
 		System.out.println("3: Opret bruger");			//Create user
-		System.out.println("4: Rediger bruger");		//Update user
+		System.out.println("4: Rediger bruger");			//Update user
 		System.out.println("5: Slet bruger");			//Delete user
-		System.out.println("6: Afslut program");		//Exit program
+		System.out.println("6: Afslut program");			//Exit program
 		Scanner sc = new Scanner(System.in);
 
 		boolean hasEnded = false;
@@ -31,12 +31,13 @@ public class TUI implements IUI {
 			int selection = sc.nextInt();
 			switch (selection) {
 			case 1: //getUser
+				System.out.println("Indtast bruger ID'et på den bruger du gerne vil finde: ");
 				int userId = sc.nextInt();
-				System.out.println("Indtast dit bruger ID: ");
 				f.getUser(userId);
 				System.out.println("1"); //Only for test purposes
 				break;
 			case 2: //GetUserList
+				System.out.println("Printer liste...");
 				f.getUserList();
 				System.out.println("2");	//Only for test purposes
 				break;
@@ -96,12 +97,15 @@ public class TUI implements IUI {
 				System.out.println("4");	//Only for test purposes
 				break;
 			case 5: //Delete user
+				System.out.println("Indtast bruger ID'et på den bruger du gerne vil slette: ");
 				int userId5 = sc.nextInt();
-				System.out.println("Indtast dit bruger ID: ");
 				f.deleteUser(userId5);
 				System.out.println("5");	//Only for test purposes
 				break;
 			case 6: //Exit
+				System.out.println("Lukker ned...");
+				System.out.println("Farvel");
+
 				f.exit();
 				hasEnded = true;
 				System.out.println("6");	//Only for test purposes
