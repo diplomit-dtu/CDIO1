@@ -1,5 +1,6 @@
 package ui;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,11 +47,12 @@ public class TUI implements IUI {
 				String userName3 = sc.nextLine();
 				System.out.println("Indtast dine initialer: ");
 				String ini3 = sc.nextLine();
-				System.out.println("Indtast dit CPR-nummer: ");
+				System.out.println("Indtast din rolle(r), hvis du har flere så seperer med komma og mellemrum: ");
 				String roles3 = sc.nextLine();
-				System.out.println("Indtast din rolle: ");
+				List<String> roles = Arrays.asList(roles3.split(", "));
+				System.out.println("Indtast dit CPR-nummer: ");
 				String cpr3 = sc.nextLine();
-				f.createUser(userName3, ini3, roles3, cpr3);
+				f.createUser(userName3, ini3, roles, cpr3);
 				System.out.println("3");
 				break;
 			case 4: //Update user.
@@ -66,25 +68,30 @@ public class TUI implements IUI {
 //				System.out.println("5: Kodeord");
 
 				int selection2 = sc.nextInt();
+				String userName4 = null;
+				String ini4 = null;
+				String cpr4 = null;
+				List<String> roles1 = null;
 				switch(selection2){
 				case 1: //Username
-					String userName4 = sc.nextLine();
+					userName4 = sc.nextLine();
 					break;
 				case 2: //Initails
-					String ini4 = sc.nextLine();
+					ini4 = sc.nextLine();
 					break;
 				case 3: //Choose roles
-//					String roles4 = sc.nextLine();
+					String roles4 = sc.nextLine();
+					roles1 = Arrays.asList(roles4.split(", "));
 					break;
 				case 4: //CPR number
-					String cpr4 = sc.nextLine();
+					cpr4 = sc.nextLine();
 					break;
 //				case 5: //Password
 //					break;
 				default:
 					break;
-					f.updateUser(userId4, userName4, ini4, roles4, cpr4);
 				}
+				f.updateUser(userId4, userName4, ini4, roles1, cpr4);
 
 				System.out.println("4");
 				break;
@@ -104,6 +111,7 @@ public class TUI implements IUI {
 				break;
 			}
 		}
+		sc.close();
 	}
 
 	@Override
@@ -173,7 +181,7 @@ public class TUI implements IUI {
 				break;
 			default:
 			}
-
+			sc.close();
 		}
 		return null;
 	}
