@@ -1,10 +1,14 @@
+CREATE DATABASE cdio_2Semester;
+USE cdio_2Semester;
 CREATE TABLE personer (
-	userID int,
+	userID int NOT NULL AUTO_INCREMENT,
 	userName varchar(48), 
         ini varchar(6),
         roles varchar(36),
         cpr varchar(11),
-        passwd varchar(64)
+        passwd varchar(64),
+        PRIMARY KEY (userID)
                         );
-Insert into personer(userID, userName, ini, roles, cpr, passwd) values
-(1, 'test', 'tst', 'admin', '123456-8888', 'secure');
+INSERT INTO personer(userName, ini, roles, cpr, passwd) VALUES
+('test', 'tst', 'admin', '123456-8888', 'secure');
+
