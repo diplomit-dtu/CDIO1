@@ -62,7 +62,11 @@ public class Connector
 					ClassNotFoundException, SQLException
 	{	
 		System.out.println("Before executeScpDB() method");
-		executeScpDB("../database_create.sql"); //calls function that automatically creates a database and two users
+		SQLReader st = new SQLReader();
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=");
+		Statement s = conn.createStatement();
+		st.tester(s);
+		//executeScpDB("../database_create.sql"); //calls function that automatically creates a database and two users
 		//a bit redundant in terms of code optimization. but due to current code structure, doing a seperate call
 		
 		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database,
