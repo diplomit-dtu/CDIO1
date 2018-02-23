@@ -39,7 +39,6 @@ public class FuncImpl implements IFuncImpl{
 	@Override
 	public void createUser(String userName, String ini, List<String> roles, String cpr) throws DALException {
 		// Creates a UserDTO and sets the attributes to the corresponding parameters.
-		// Roles is not implemented yet.
 		this.dt = new UserDTO();    
 		this.dt.setUserName(userName);
 		this.dt.setIni(ini);
@@ -53,7 +52,6 @@ public class FuncImpl implements IFuncImpl{
 	@Override
 	public void updateUser(int userId, String userName, String ini, List<String> roles, String cpr) throws DALException {
 		// Updates the user by getting the user and then set the users attributes to the corresponding parameters.
-		// Roles is not implemented yet.
 		UserDTO user = getUser(userId);
 		if(user != null){
 			user.setUserName(userName);              
@@ -66,7 +64,6 @@ public class FuncImpl implements IFuncImpl{
 
 	@Override
 	public void deleteUser(int userId) throws DALException {
-		// TODO Auto-generated method stub
 		// Deletes the user by getting the user and if the user exists then it calls the deleteUser method of the UserDBDAO.
 		UserDTO user = getUser(userId);
 		if(user != null)
