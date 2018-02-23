@@ -27,7 +27,7 @@ public class UserDBDAO implements IUserDAO{
 		{
 			while (rs.next()) 
 			{
-				list.add(new UserDTO(rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), rs.getString("roles"), rs.getString("cpr"), rs.getString("passwd")));
+				list.add(new UserDTO(rs.getInt("userID"), rs.getString("userName"), rs.getString("ini"), Arrays.asList(rs.getString("roles").split(", ")), rs.getString("cpr"), rs.getString("passwd")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e.getMessage(), e); }
@@ -40,7 +40,7 @@ public class UserDBDAO implements IUserDAO{
 		Connector.doUpdate(	//NEEDS TO BE SETUP------------------------------------------------------------------------
 		"INSERT INTO personer(userID, userName, ini, roles, cpr, passwd) VALUES " + 
 		"(" + user.getUserId() + ", '" + user.getUserName() + "', '" + user.getIni() + 
-		"', '" + user.getRoles() + "', '" + user.getCpr() + "', '" + user.getPassword() + "');"
+		"', '" + Arrays.toString(user.getRoles().toArray())  + "', '" + user.getCpr() + "', '" + user.getPassword() + "');"
 		);
 		
 		
@@ -52,7 +52,7 @@ public class UserDBDAO implements IUserDAO{
 		Connector.doUpdate(	//NEEDS TO BE SETUP------------------------------------------------------------------------
 				"UPDATE personer SET " + 
 				 "userID = '" + user.getUserId() + "', userName = '" + user.getUserName() + "', ini = '" + user.getIni() + "', " + 
-				"roles = '" + user.getRoles() + "', cpr ='" + user.getCpr() + "', passwd = '" + user.getPassword() + "'" + 
+				"roles = '" + Arrays.toString(user.getRoles().toArray()) + "', cpr ='" + user.getCpr() + "', passwd = '" + user.getPassword() + "'" + 
 				"WHERE userID = " + user.getUserId() + ";"
 				);
 	}
