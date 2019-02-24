@@ -77,9 +77,10 @@ public class UserDAOImpls132962 implements IUserDAO {
         String password = passwordGenerator.getPassword();
         password = password.replace("'", "''");
 
-        String update = "INSERT INTO user(user_id, user_name, user_password, initials, cpr, admin, pharmacist, foreman, operator)" +
-                "VALUES(" + user.getUserId() + ", '" + user.getUserName() + "', '" + password + "', '" + user.getIni() +
-                "', 'no_cpr', '" + roleBooleans[0] + "', '" + roleBooleans[1] + "', '" + roleBooleans[2] + "', '" + roleBooleans[3] + "');";
+        String update = "INSERT INTO user(user_id, user_name, user_password, initials, cpr, admin, pharmacist, " +
+                "foreman, operator) VALUES(" + user.getUserId() + ", '" + user.getUserName() + "', '" + password +
+                "', '" + user.getIni() + "', 'no_cpr', '" + roleBooleans[0] + "', '" + roleBooleans[1] + "', '" +
+                roleBooleans[2] + "', '" + roleBooleans[3] + "');";
 
         try (Connection connection = DriverManager.getConnection(databaseURL, userName, databasePassword)) {
 
@@ -153,8 +154,10 @@ public class UserDAOImpls132962 implements IUserDAO {
 
         // Array of all valid symbols
         private Character[] validSymbols = {
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 '.', '-', '_', '+', '!', '?', '\'', ',', '='};
 
