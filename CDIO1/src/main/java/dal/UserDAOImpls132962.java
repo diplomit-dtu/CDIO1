@@ -108,9 +108,9 @@ public class UserDAOImpls132962 implements IUserDAO {
         }
 
         String update = "UPDATE user SET user_name = '" + user.getUserName() + "', initials = '" + user.getIni() +
-                "', cpr = ', 'no_cpr', admin = '" + roleBooleans[0] + "', pharmacist = '" + roleBooleans[1] +
+                "', cpr = 'no_cpr', admin = '" + roleBooleans[0] + "', pharmacist = '" + roleBooleans[1] +
                 "', foreman = '" + roleBooleans[2] + "', operator = '" + roleBooleans[3] +
-                "WHERE user_id = " + user.getUserId() + ";";
+                "' WHERE user_id = " + user.getUserId() + ";";
 
         try (Connection connection = DriverManager.getConnection(databaseURL, userName, databasePassword)) {
 
@@ -118,7 +118,7 @@ public class UserDAOImpls132962 implements IUserDAO {
             statement.executeUpdate(update);
 
         } catch (SQLException s) {
-            throw new DALException("Could not create user " + user.getUserId() + ".", s);
+            throw new DALException("Could not update user " + user.getUserId() + ".", s);
         }
     }
 

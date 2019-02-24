@@ -79,7 +79,7 @@ public class UserDAOImpls132962Test {
         testUser.setUserName("Kim Larsen");
         testUser.setIni("KiLa");
         List<String> roles = new ArrayList<>();
-        roles.add("administrator");
+        roles.add("admin");
         testUser.setRoles(roles);
         try{
             testDAO.updateUser(testUser);
