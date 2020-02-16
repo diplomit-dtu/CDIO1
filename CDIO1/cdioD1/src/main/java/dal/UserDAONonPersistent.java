@@ -104,5 +104,5 @@ public class UserDAONonPersistent implements IUserDAO
         }
         throw new DALException("Der fandtes ingen bruger med ID " + userId);
     }
-    
+
 }
