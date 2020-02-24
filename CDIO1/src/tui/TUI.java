@@ -6,7 +6,7 @@ public class TUI {
     
     private Scanner scan = new Scanner(System.in);
     
-    private int showMenu(String Message, String ... menuItems){
+    public int showMenu(String Message, String... menuItems){
         
         System.out.println(Message);
         
@@ -46,14 +46,4 @@ public class TUI {
             
             return choice;
     }
-    
-    public static void main(String[] args) {
-        TUI tui = new TUI();
-        
-        tui.showMenu("Vælg et menupunkt", "Opret bruger", "Slet bruger", "Rediger bruger");
-    }
-    
-    
-
-
 }
