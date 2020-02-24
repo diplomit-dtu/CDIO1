@@ -4,6 +4,7 @@ import Services.TxtReader;
 import dto.UserDTO;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -35,12 +36,26 @@ public class UserDAO implements IUserDAO {
     public void createUser(UserDTO user) throws DALException{
         //Opretter en fil med User'id'et som navn
         try{
-            File file = new File("src/Services/users/",user.getUserId()+"");
+            String path = "CDIO1/src/Services/users/";
+            File file = new File(path + user.getUserId()+".txt");
             if (file.createNewFile()){
                 System.out.println("File created" + file.getName());
             }
         }
         catch(IOException e){ //Todo skal muligvis ændres til en DALException når vi får lavet den - Lasse
+            e.printStackTrace();
+        }
+        try {
+            String path = "CDIO1/src/Services/users/";
+            FileWriter file = new FileWriter(path + user.getUserId() + ".txt");
+            file.write("0,," + user.getUserName() + "\n" +
+                    "1,," + user.getIni() + "\n" +
+                    "2,," + "cpr nummer her" + "\n" +
+                    "3,," + "password her" + "\n" +
+                "4,," + user.getRoles());
+            file.close();
+        } catch(IOException e){
+            System.out.println("dit fuck-up er at det er fucked");
             e.printStackTrace();
         }
 
