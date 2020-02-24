@@ -2,6 +2,8 @@ package dal;
 
 import dto.UserDTO;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class UserDAO implements IUserDAO {
@@ -15,6 +17,16 @@ public class UserDAO implements IUserDAO {
     }
     @Override
     public void createUser(UserDTO user) throws DALException{
+        //Opretter en fil med User'id'et som navn
+        try{
+            File file = new File("src/Services/users/",user.getUserId()+"");
+            if (file.createNewFile()){
+                System.out.println("File created" + file.getName());
+            }
+        }
+        catch(IOException e){ //Todo skal muligvis ændres til en DALException når vi får lavet den - Lasse
+            e.printStackTrace();
+        }
 
     }
     @Override
