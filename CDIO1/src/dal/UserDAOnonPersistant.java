@@ -1,55 +1,58 @@
 package dal;
 
-import Data.ArraylistnonPersistens;
+import Data.MapnonPersistens;
 import dto.UserDTO;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 public class UserDAOnonPersistant implements IUserDAO {
 
-    ArraylistnonPersistens data1;
+    MapnonPersistens data1;
 
     public UserDAOnonPersistant() {
-        data1 = new ArraylistnonPersistens();
+        data1 = new MapnonPersistens();
+
     }
 
     @Override
     public UserDTO getUser(int userId) throws DALException {
-        UserDTO temp;
-        for (int i = 0; i < data1.getUsers().size(); i++) {
-            if (data1.getUsers().get(i).getUserId() == userId) {
-                temp = data1.getUsers().get(i);
-                return temp;
-            }
 
-        }
-        return null;
+        return data1.getUsers().get(userId);
     }
 
     @Override
     public List<UserDTO> getUserList() throws DALException {
-        return data1.getUsers();
+       return new ArrayList(data1.getUsers().values());
+
     }
 
     @Override
     public void createUser(UserDTO user) throws DALException {
-
-        data1.getUsers().add(user);
+        if (data1.getUsers().containsKey(user.getUserId())){
+            throw new DALException("Bruger navn er optaget");
+        }
+        else
+        data1.getUsers().put(user.getUserId(),user);
 
     }
 
     @Override
     public void updateUser(UserDTO user) throws DALException {
-
+        if (data1.getUsers().containsKey(user.getUserId()))
+        data1.getUsers().replace(user.getUserId(),user);
+        else
+            throw new DALException("Brugeren eksistet ikke");
 
     }
 
     @Override
     public void deleteUser(int userId) throws DALException {
-        for (int i = 0; i < data1.getUsers().size(); i++) {
-            if (data1.getUsers().get(i).getUserId() == userId) {
-                data1.getUsers().remove(i);
-            }
-        }
+        if (data1.getUsers().containsKey(userId))
+            data1.getUsers().remove(userId);
+        else
+            throw new DALException("Brugeren eksisterer ikke");
+
     }
 }

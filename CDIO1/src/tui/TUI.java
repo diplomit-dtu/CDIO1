@@ -1,5 +1,8 @@
 package tui;
 
+import dto.UserDTO;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class TUI {
@@ -45,5 +48,35 @@ public class TUI {
             }
             
             return choice;
+    }
+
+    public UserDTO createUser() {
+
+        UserDTO newuser = new UserDTO();
+
+
+        System.out.println("Indtast Navn: ");
+            newuser.setUserName(scan.nextLine());
+        System.out.println("Indtast Initial: ");
+            newuser.setIni(scan.nextLine());
+        System.out.println("Indtast Role");
+            newuser.addRole(scan.nextLine());
+            newuser.setUserId(UserDTO.getCounter());
+
+        UserDTO.setCounter(UserDTO.getCounter()+1);
+
+        return newuser;
+    }
+    public void listUsers(List<UserDTO> list){
+        for (int i = 0; i < list.size() ; i++) {
+            System.out.println(list.get(i));
+        }
+    }
+    public int deleteUser(){
+        System.out.println("Indtast ID: ");
+
+        int id = scan.nextInt();
+        return id;
+
     }
 }
