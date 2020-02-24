@@ -46,4 +46,10 @@ public class TUI {
             
             return choice;
     }
+
+
+    public String inputString(String message){
+        System.out.println(message);
+        return scan.nextLine();
+    }
 }
