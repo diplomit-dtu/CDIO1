@@ -5,6 +5,7 @@ import dto.UserDTO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -15,8 +16,14 @@ public class UserDAO implements IUserDAO {
        txtReader.openFile("src/Services/users/",userId +".txt");
        txtReader.readLines();
        String name = txtReader.getLine("0");
+       String ini = txtReader.getLine("1");
+       String cpr = txtReader.getLine("2");
+       String pass = txtReader.getLine("3");
+//       String [] roles = txtReader.getLine("4").split("-");
        UserDTO user = new UserDTO();
        user.setUserName(name);
+       user.setIni(ini);
+//       user.setRoles(Arrays.asList(roles));
        return user;
 
     }
