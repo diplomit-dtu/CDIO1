@@ -3,6 +3,7 @@ package dal;
 import dto.UserDTO;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,6 +27,15 @@ public class UserDAO implements IUserDAO {
             }
         }
         catch(IOException e){ //Todo skal muligvis ændres til en DALException når vi får lavet den - Lasse
+            e.printStackTrace();
+        }
+        try {
+            String path = "CDIO1/src/Services/users/";
+            FileWriter file = new FileWriter(path + user.getUserId() + ".txt");
+            file.write("geder");
+            file.close();
+        } catch(IOException e){
+            System.out.println("dit fuck-up er at det er fucked");
             e.printStackTrace();
         }
 

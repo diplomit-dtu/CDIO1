@@ -9,6 +9,8 @@ public class fileTest {
         UserDTO user = new UserDTO();
         user.setUserId(5);
         user.setUserName("Johnny");
+        user.setIni("JOH");
+        user.addRole("Operator");
         UserDAO user2 = new UserDAO();
         try {
             user2.createUser(user);
