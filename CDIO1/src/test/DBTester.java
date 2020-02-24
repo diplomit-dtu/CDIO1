@@ -6,19 +6,22 @@ import java.util.List;
 import dal.IUserDAO;
 import dal.IUserDAO.DALException;
 import dal.UserDAODiscImpl;
+import dal.UserDAOnonPersistant;
 import dto.UserDTO;
 
 public class DBTester {
 	//TODO refactor as JUnit test???
 	public static void main(String[] args) {
+
 		IUserDAO iDAO = new UserDAODiscImpl();
 		UserDTO newUser = new UserDTO();
-		printUsers(iDAO);
+		//printUsers(iDAO);
 		//TODO test new fields...
 		newUser.setIni("test");
 		newUser.addRole("Admin");
 		newUser.setUserName("testName");
 		newUser.setUserId(0);
+
 		try {
 			iDAO.createUser(newUser);
 		} catch (DALException e) {
@@ -30,7 +33,7 @@ public class DBTester {
 		} catch (DALException e1) {
 			System.out.println("User already existed - OK");
 		}
-	
+
 		newUser.setUserId(1);
 		newUser.setUserName("2ND user");
 		try {
@@ -47,15 +50,15 @@ public class DBTester {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		printUsers(iDAO);
-		
+
 		try {
 			iDAO.deleteUser(1);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		
+
 		printUsers(iDAO);
 		
 		

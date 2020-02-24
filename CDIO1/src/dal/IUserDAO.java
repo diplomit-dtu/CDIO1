@@ -12,7 +12,6 @@ public interface IUserDAO {
 	void deleteUser(int userId) throws DALException;
 	
 	public class DALException extends Exception {
-
 		/**
 		 * 
 		 */
