@@ -5,10 +5,14 @@ import java.util.Scanner;
 public class TUI {
     
     private Scanner scan = new Scanner(System.in);
+
+    public void showMessage(String message) {
+        System.out.println(message);
+    }
     
-    public int showMenu(String Message, String... menuItems){
+    public int showMenu(String message, String... menuItems){
         
-        System.out.println(Message);
+        System.out.println(message);
         
         //Display menu
         for (int i = 1; i < menuItems.length+1; i++) {
