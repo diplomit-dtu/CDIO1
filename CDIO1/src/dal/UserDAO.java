@@ -1,13 +1,18 @@
 package dal;
 
+import Services.TxtReader;
 import dto.UserDTO;
 
 import java.util.List;
 
+
 public class UserDAO implements IUserDAO {
+    TxtReader txtReader;
     @Override
     public UserDTO getUser(int userId) throws DALException{
-        return null;
+       txtReader.openFile("src/Services/users/",userId +".txt");
+       txtReader.readLines();
+       return null;
     }
     @Override
     public List<UserDTO> getUserList() throws DALException{
