@@ -19,7 +19,8 @@ public class UserDAO implements IUserDAO {
     public void createUser(UserDTO user) throws DALException{
         //Opretter en fil med User'id'et som navn
         try{
-            File file = new File("src/Services/users/",user.getUserId()+"");
+            String path = "CDIO1/src/Services/users/";
+            File file = new File(path + user.getUserId()+".txt");
             if (file.createNewFile()){
                 System.out.println("File created" + file.getName());
             }
