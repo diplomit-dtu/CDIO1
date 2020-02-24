@@ -45,12 +45,17 @@ public class UserLogic {
     }
     
     private void createUser(){
+        try {
+            d.createUser(t.createUser());
+        }catch (IUserDAO.DALException e){
+            System.out.println("Fuck det her!!");
+        }
     }
     
     private void ListUsers(){
         
         try {
-            d.getUserList();
+            t.listUsers(d.getUserList());
             
             
             
@@ -65,6 +70,14 @@ public class UserLogic {
     }
     
     private void deleteUser(){
+       int id = t.deleteUser();
+       try {
+           d.deleteUser(id);
+       }catch (IUserDAO.DALException e){
+           System.out.println(e.getMessage());
+           t.deleteUser();
+       }
+
     
     }
 

@@ -11,7 +11,11 @@ public class UserDTO implements Serializable{
 	private String userName;                
 	private String ini;                 
 	private List<String> roles;
-	//TODO Add relevant fields
+	//TODO denne counter skal ændres til 0 inden aflevering
+	private static int counter = 4;
+
+
+//TODO Add relevant fields
 	
 	public UserDTO() {
 		this.roles = new ArrayList<>();
@@ -53,6 +57,14 @@ public class UserDTO implements Serializable{
 	 */
 	public boolean removeRole(String role){
 		return this.roles.remove(role);
+	}
+
+	public static int getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int counter) {
+		UserDTO.counter = counter;
 	}
 
 	@Override
