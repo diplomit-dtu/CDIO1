@@ -6,6 +6,7 @@ import dto.UserDTO;
 
 public class fileTest {
     public static void main(String[] args) {
+        //Laver en fil der hedder 5.txt med info herunder og læser den igen og printer initialerne
         UserDTO user = new UserDTO();
         user.setUserId(5);
         user.setUserName("Johnny");
