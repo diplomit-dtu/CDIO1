@@ -9,12 +9,16 @@ import java.util.List;
 
 
 public class UserDAO implements IUserDAO {
-    TxtReader txtReader;
+    TxtReader txtReader = new TxtReader();
     @Override
     public UserDTO getUser(int userId) throws DALException{
        txtReader.openFile("src/Services/users/",userId +".txt");
        txtReader.readLines();
-       return null;
+       String name = txtReader.getLine("0");
+       UserDTO user = new UserDTO();
+       user.setUserName(name);
+       return user;
+
     }
     @Override
     public List<UserDTO> getUserList() throws DALException{
