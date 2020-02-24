@@ -13,10 +13,13 @@ public class fileTest {
         user.addRole("Operator");
         user.addRole("Admin");
         UserDAO user2 = new UserDAO();
+        UserDTO userDTO = new UserDTO();
         try {
             user2.createUser(user);
+            userDTO= user2.getUser(5);
         } catch (IUserDAO.DALException e) {
             e.printStackTrace();
         }
+        System.out.println(userDTO.getIni());
     }
 }

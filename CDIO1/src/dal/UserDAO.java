@@ -14,7 +14,7 @@ public class UserDAO implements IUserDAO {
     TxtReader txtReader = new TxtReader();
     @Override
     public UserDTO getUser(int userId) throws DALException{
-       txtReader.openFile("src/Services/users/",userId +".txt");
+       txtReader.openFile("CDIO1/src/Services/users/",userId+"");
        txtReader.readLines();
        String name = txtReader.getLine("0");
        String ini = txtReader.getLine("1");
