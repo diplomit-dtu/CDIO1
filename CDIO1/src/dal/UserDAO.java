@@ -32,7 +32,11 @@ public class UserDAO implements IUserDAO {
         try {
             String path = "CDIO1/src/Services/users/";
             FileWriter file = new FileWriter(path + user.getUserId() + ".txt");
-            file.write("geder");
+            file.write("0,," + user.getUserName() + "\n" +
+                    "1,," + user.getIni() + "\n" +
+                    "2,," + "cpr nummer her" + "\n" +
+                    "3,," + "password her" + "\n" +
+                "4,," + user.getRoles());
             file.close();
         } catch(IOException e){
             System.out.println("dit fuck-up er at det er fucked");

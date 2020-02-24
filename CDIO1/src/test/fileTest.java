@@ -11,6 +11,7 @@ public class fileTest {
         user.setUserName("Johnny");
         user.setIni("JOH");
         user.addRole("Operator");
+        user.addRole("Admin");
         UserDAO user2 = new UserDAO();
         try {
             user2.createUser(user);
