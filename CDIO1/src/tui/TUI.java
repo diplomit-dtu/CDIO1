@@ -14,7 +14,7 @@ public class TUI {
     }
 
     public int showMenu(String message, String... menuItems){
-        
+        System.out.println("#########################################");
         System.out.println(message);
         
         //Display menu
@@ -39,7 +39,7 @@ public class TUI {
     
     //Gets a number from the user
     private int inputNumber(){
-        
+        System.out.println("#########################################");
             int choice;
         
             while(true){
