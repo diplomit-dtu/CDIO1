@@ -58,7 +58,13 @@ public class UserDTO implements Serializable{
 	}
 	
 	public void addRole(String role){
-		this.roles.add(role);
+		boolean exist = false;
+		for (int i = 0; i < roles.size(); i++) {
+			if (role == roles.get(i))
+				exist = true;
+				}
+		if (!exist)
+			this.roles.add(role);
 	}
 	/**
 	 * 
