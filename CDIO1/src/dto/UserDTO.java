@@ -43,6 +43,16 @@ public class UserDTO implements Serializable{
 	public List<String> getRoles() {
 		return roles;
 	}
+	public String getRolesToString(){
+		String answer = "";
+		for (int i = 0; i < roles.size(); i++) {
+			if (i > 0)
+				answer = answer + "-" + roles.get(i);
+			else
+				answer = answer + roles.get(i);
+		}
+		return answer;
+	}
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}

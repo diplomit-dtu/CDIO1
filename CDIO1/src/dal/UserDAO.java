@@ -20,7 +20,7 @@ public class UserDAO implements IUserDAO {
        String ini = txtReader.getLine("1");
        String cpr = txtReader.getLine("2");
        String pass = txtReader.getLine("3");
-//       String [] roles = txtReader.getLine("4").split("-");
+//       String[] roles = txtReader.getLine("4").split("-");
        UserDTO user = new UserDTO();
        user.setUserName(name);
        user.setIni(ini);
@@ -52,7 +52,7 @@ public class UserDAO implements IUserDAO {
                     "1,," + user.getIni() + "\n" +
                     "2,," + "cpr nummer her" + "\n" +
                     "3,," + "password her" + "\n" +
-                "4,," + user.getRoles());
+                "4,," + user.getRolesToString());
             file.close();
         } catch(IOException e){
             System.out.println("dit fuck-up er at det er fucked");
