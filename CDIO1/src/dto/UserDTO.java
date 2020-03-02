@@ -79,7 +79,7 @@ public class UserDTO implements Serializable{
 				exist = true;
 				break;
 			}
-				}
+		}
 		if (!exist)
 			this.roles.add(role);
 	}
