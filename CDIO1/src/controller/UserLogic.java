@@ -56,9 +56,6 @@ public class UserLogic {
         
         try {
             t.listUsers(d.getUserList());
-            
-            
-            
         } catch (IUserDAO.DALException e) {
             e.printStackTrace();
         }

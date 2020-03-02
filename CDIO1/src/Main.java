@@ -1,5 +1,9 @@
+import controller.UserLogic;
 import dal.IUserDAO;
 import dal.UserDAO;
+import dal.UserDAOnonPersistant;
+import functionality.Functionality;
+import functionality.IFunctionality;
 import tui.TUI;
 import passwordVerifier.PasswordVerifier;
 
@@ -8,20 +12,20 @@ public class Main {
     public static void main(String[] args){
         
         TUI tui = new TUI();
-        tui.showMenu("Vælg et menupunkt", "Opret bruger", "Slet bruger", "Rediger bruger");
-
-
-        //password testing... -Completed :-) 
-        PasswordVerifier verifier = new PasswordVerifier();
-        try {
-            if (verifier.verify(tui.inputString("Enter password"))) {
-                tui.showMessage("Password accepteret");
-            }
+        IFunctionality functionality = new Functionality();
+        int choice = tui.showMenu("Vælg database", "Non-persistent", "Fil på disk", "SQL database");
+        
+        switch(choice){
+            case 1:
+                new UserLogic(tui, functionality, new UserDAOnonPersistant()).start();
+                break;
+            case 2:
+                new UserLogic(tui, functionality, new UserDAO()).start();
+                break;
+            case 3:
+                System.out.println("Ikke implementeret endnu");
+                break;
         }
-        catch (Exception e) {
-            tui.showMessage(e.getMessage());
-        }
-    
     }
     
 }
