@@ -58,19 +58,42 @@ public class TUI {
 
         UserDTO newuser = new UserDTO();
 
+        String name = "";
+        do {
+            System.out.println("Indtast Navn: ");
+            name = scan.nextLine();
+            if (name.equals("")){
+                System.out.println("Brugeren skal have et navn");
+            }
+        } while (name.equals(""));
+        newuser.setUserName(name);
 
-        System.out.println("Indtast Navn: ");
-            newuser.setUserName(scan.nextLine());
-        System.out.println("Indtast Initial: ");
-            newuser.setIni(scan.nextLine());
-        System.out.println("Indtast Role");
-            newuser.addRole(scan.nextLine());
-            newuser.setUserId(UserDTO.getCounter());
+        String init = "";
+        boolean check = false;
+        do {
+            System.out.println("Indtast Initial: ");
+            init = scan.nextLine();
+            if (init.length() < 2 || init.length() > 4) {
+                System.out.println("Initialer skal have mellem 2 - 4 bogstaver");
+            } else {
+                check = true;
+            }
+        } while (!check);
+        newuser.setIni(init);
+
+        newuser.getRoles();
+
+        do {
+            System.out.println("Indtast Role");
+        }
+        newuser.addRole(scan.nextLine());
+        newuser.setUserId(UserDTO.getCounter());
 
         UserDTO.setCounter(UserDTO.getCounter()+1);
 
         return newuser;
     }
+
     public void listUsers(List<UserDTO> list){
         for (int i = 0; i < list.size() ; i++) {
             System.out.println(list.get(i));
