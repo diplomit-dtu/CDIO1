@@ -12,7 +12,7 @@ import functionality.Functionality;
 public class Main {
     
     public static void main(String[] args){
-        
+        //TODO fix (lasse)
         TUI tui = new TUI();
         IFunctionality functionality = new Functionality();
         int choice = tui.showMenu("Vælg database", "Non-persistent", "Fil på disk", "SQL database");

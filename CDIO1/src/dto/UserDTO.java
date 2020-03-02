@@ -10,9 +10,9 @@ public class UserDTO implements Serializable{
 	private int	userId;                     
 	private String userName;                
 	private String ini;
+	private String cpr;
 	private String password;
 	private List<String> roles;
-	//TODO denne counter skal ændres til 0 inden aflevering
 	private static int counter = 11;
 
 
@@ -48,6 +48,12 @@ public class UserDTO implements Serializable{
 	public void setIni(String ini) {
 		this.ini = ini;
 	}
+	public String getCpr() {
+		return cpr;
+	}
+	public void setCpr(String cpr) {
+		this.cpr = cpr;
+	}
 
 	public List<String> getRoles() {
 		return roles;
@@ -73,7 +79,7 @@ public class UserDTO implements Serializable{
 				exist = true;
 				break;
 			}
-				}
+		}
 		if (!exist)
 			this.roles.add(role);
 	}
