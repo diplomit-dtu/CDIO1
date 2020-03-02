@@ -12,7 +12,7 @@ public class UserDTO implements Serializable{
 	private String ini;                 
 	private List<String> roles;
 	//TODO denne counter skal ændres til 0 inden aflevering
-	private static int counter = 4;
+	private static int counter = 11;
 
 
 //TODO Add relevant fields
