@@ -57,19 +57,65 @@ public class TUI {
     public UserDTO createUser() {
 
         UserDTO newuser = new UserDTO();
-        
-        System.out.println("Indtast Navn: ");
-            newuser.setUserName(scan.nextLine());
-        System.out.println("Indtast Initial: ");
-            newuser.setIni(scan.nextLine());
-        System.out.println("Indtast Role");
-            newuser.addRole(scan.nextLine());
-            newuser.setUserId(UserDTO.getCounter());
+
+        String name = "";
+        do {
+            System.out.println("Indtast Navn: ");
+            name = scan.nextLine();
+            if (name.equals("")){
+                System.out.println("Brugeren skal have et navn");
+            }
+        } while (name.equals(""));
+        newuser.setUserName(name);
+
+        String init = "";
+        boolean check = false;
+        do {
+            System.out.println("Indtast Initial: ");
+            init = scan.nextLine();
+            if (init.length() < 2 || init.length() > 4) {
+                System.out.println("Initialer skal have mellem 2 - 4 bogstaver");
+            } else {
+                check = true;
+            }
+        } while (!check);
+        newuser.setIni(init);
+
+        String inp = "";
+        check = false;
+        System.out.println("Vælg Roler (skriv tallene for alle de roller brugeren skal have på samme linje):");
+        System.out.println("1:Admin, 2:Pharmacist, 3:Foreman, 4:Operator");
+        inp = scan.nextLine();
+        for (int i = 0; i < inp.length(); i++) { // Will not be able to have more than 10 different roles this way.
+            try {
+                int x = Character.getNumericValue(inp.charAt(i));
+                switch (x) {
+                    case 1:
+                        newuser.addRole("Admin");
+                        break;
+                    case 2:
+                        newuser.addRole("Pharmacist");
+                        break;
+                    case 3:
+                        newuser.addRole("Foreman");
+                        break;
+                    case 4:
+                        newuser.addRole("Operator");
+                        break;
+                    default:
+                        break;
+                }
+            } catch (NumberFormatException e) {
+
+            }
+        }
+        newuser.setUserId(UserDTO.getCounter());
 
         UserDTO.setCounter(UserDTO.getCounter()+1);
 
         return newuser;
     }
+
     public void listUsers(List<UserDTO> list){
         for (int i = 0; i < list.size() ; i++) {
             System.out.println(list.get(i));

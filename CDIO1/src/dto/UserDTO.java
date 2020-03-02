@@ -12,7 +12,7 @@ public class UserDTO implements Serializable{
 	private String ini;                 
 	private List<String> roles;
 	//TODO denne counter skal ændres til 0 inden aflevering
-	private static int counter = 4;
+	private static int counter = 11;
 
 
 //TODO Add relevant fields
@@ -43,12 +43,30 @@ public class UserDTO implements Serializable{
 	public List<String> getRoles() {
 		return roles;
 	}
+	public String getRolesToString(){
+		String answer = "";
+		for (int i = 0; i < roles.size(); i++) {
+			if (i > 0)
+				answer = answer + "-" + roles.get(i);
+			else
+				answer = answer + roles.get(i);
+		}
+		return answer;
+	}
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
 	
 	public void addRole(String role){
-		this.roles.add(role);
+		boolean exist = false;
+		for (int i = 0; i < roles.size(); i++) {
+			if (role.equals(roles.get(i))) {
+				exist = true;
+				break;
+			}
+				}
+		if (!exist)
+			this.roles.add(role);
 	}
 	/**
 	 * 

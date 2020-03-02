@@ -43,7 +43,8 @@ public class UserLogic {
                     deleteUser();
                     break;
                 case 5:
-                    break outer;
+                    java.lang.System.exit(0); //Will exit the program with error code 0
+                    //break outer;
             }
         }
     }

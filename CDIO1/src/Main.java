@@ -6,6 +6,8 @@ import functionality.Functionality;
 import functionality.IFunctionality;
 import tui.TUI;
 import passwordVerifier.PasswordVerifier;
+import controller.UserLogic;
+import functionality.Functionality;
 
 public class Main {
     
@@ -27,5 +29,4 @@ public class Main {
                 break;
         }
     }
-    
 }
