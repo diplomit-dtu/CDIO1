@@ -81,12 +81,34 @@ public class TUI {
         } while (!check);
         newuser.setIni(init);
 
-        newuser.getRoles();
+        String inp = "";
+        check = false;
+        System.out.println("Vælg Roler (skriv tallene for alle de roller brugeren skal have på samme linje):");
+        System.out.println("1:Admin, 2:Pharmacist, 3:Foreman, 4:Operator");
+        inp = scan.nextLine();
+        for (int i = 0; i < inp.length(); i++) { // Will not be able to have more than 10 different roles this way.
+            try {
+                int x = Character.getNumericValue(inp.charAt(i));
+                switch (x) {
+                    case 1:
+                        newuser.addRole("Admin");
+                        break;
+                    case 2:
+                        newuser.addRole("Pharmacist");
+                        break;
+                    case 3:
+                        newuser.addRole("Foreman");
+                        break;
+                    case 4:
+                        newuser.addRole("Operator");
+                        break;
+                    default:
+                        break;
+                }
+            } catch (NumberFormatException e) {
 
-        do {
-            System.out.println("Indtast Role");
+            }
         }
-        newuser.addRole(scan.nextLine());
         newuser.setUserId(UserDTO.getCounter());
 
         UserDTO.setCounter(UserDTO.getCounter()+1);
