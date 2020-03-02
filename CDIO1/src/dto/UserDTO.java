@@ -9,13 +9,27 @@ public class UserDTO implements Serializable{
 	private static final long serialVersionUID = 4545864587995944260L;
 	private int	userId;                     
 	private String userName;                
-	private String ini;                 
+	private String ini;
+	private String cpr;
+	private String password;
 	private List<String> roles;
-	//TODO Add relevant fields
+	private static int counter = 11;
+
+
+//TODO Add relevant fields
 	
 	public UserDTO() {
 		this.roles = new ArrayList<>();
+		this.password = "SkiftMig!";
 	}
+	
+	public String getPassword(){
+	    return password;
+    }
+    
+    public void setPassword(String newPassword){
+	    this.password = newPassword;
+    }
 	
 	public int getUserId() {
 		return userId;
@@ -35,16 +49,40 @@ public class UserDTO implements Serializable{
 	public void setIni(String ini) {
 		this.ini = ini;
 	}
+	public String getCpr() {
+		return cpr;
+	}
+	public void setCpr(String cpr) {
+		this.cpr = cpr;
+	}
 
 	public List<String> getRoles() {
 		return roles;
+	}
+	public String getRolesToString(){
+		String answer = "";
+		for (int i = 0; i < roles.size(); i++) {
+			if (i > 0)
+				answer = answer + "-" + roles.get(i);
+			else
+				answer = answer + roles.get(i);
+		}
+		return answer;
 	}
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
 	
 	public void addRole(String role){
-		this.roles.add(role);
+		boolean exist = false;
+		for (int i = 0; i < roles.size(); i++) {
+			if (role.equals(roles.get(i))) {
+				exist = true;
+				break;
+			}
+		}
+		if (!exist)
+			this.roles.add(role);
 	}
 	/**
 	 * 
@@ -53,6 +91,14 @@ public class UserDTO implements Serializable{
 	 */
 	public boolean removeRole(String role){
 		return this.roles.remove(role);
+	}
+
+	public static int getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int counter) {
+		UserDTO.counter = counter;
 	}
 
 	@Override
