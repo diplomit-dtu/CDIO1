@@ -57,8 +57,7 @@ public class TUI {
     public UserDTO createUser() {
 
         UserDTO newuser = new UserDTO();
-
-
+        
         System.out.println("Indtast Navn: ");
             newuser.setUserName(scan.nextLine());
         System.out.println("Indtast Initial: ");
@@ -76,13 +75,14 @@ public class TUI {
             System.out.println(list.get(i));
         }
     }
-    public int deleteUser(){
+    public int getUserID(){
         System.out.println("Indtast ID: ");
 
         int id = scan.nextInt();
         return id;
 
     }
+    
     public String inputString(String message){
         System.out.println(message);
         return scan.nextLine();
