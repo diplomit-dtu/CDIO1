@@ -11,6 +11,7 @@ public class UserDTO implements Serializable{
 	private String userName;                
 	private String ini;
 	private String cpr;
+	private String password;
 	private List<String> roles;
 	private static int counter = 11;
 
@@ -20,6 +21,14 @@ public class UserDTO implements Serializable{
 	public UserDTO() {
 		this.roles = new ArrayList<>();
 	}
+	
+	public String getPassword(){
+	    return password;
+    }
+    
+    public void setPassword(String newPassword){
+	    this.password = newPassword;
+    }
 	
 	public int getUserId() {
 		return userId;
