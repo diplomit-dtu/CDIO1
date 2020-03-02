@@ -42,7 +42,6 @@ public class UserLogic {
                 case 5:
                     System.out.println("\n" + "Programmet lukkes...");
                     java.lang.System.exit(0); //Will exit the program with error code 0
-                    
             }
         }
     }
@@ -132,6 +131,5 @@ public class UserLogic {
     public class userIDNotFound extends Exception {
         public userIDNotFound(String msg) { super(msg);}
     }
-    
     
 }
