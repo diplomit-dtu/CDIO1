@@ -1,5 +1,6 @@
 package tui;
 
+import dal.UserDAO;
 import dto.UserDTO;
 
 import java.util.List;
@@ -54,10 +55,7 @@ public class TUI {
             return choice;
     }
 
-    public UserDTO createUser() {
-
-        UserDTO newuser = new UserDTO();
-
+    public String inputName() {
         String name = "";
         do {
             System.out.println("Indtast Navn: ");
@@ -66,8 +64,10 @@ public class TUI {
                 System.out.println("Brugeren skal have et navn");
             }
         } while (name.equals(""));
-        newuser.setUserName(name);
+        return name;
+    }
 
+    public String inputInit() {
         String init = "";
         boolean check = false;
         do {
@@ -79,10 +79,11 @@ public class TUI {
                 check = true;
             }
         } while (!check);
-        newuser.setIni(init);
+        return init;
+    }
 
+    public void addRolesToUser(UserDTO user) {
         String inp = "";
-        check = false;
         System.out.println("Vælg Roler (skriv tallene for alle de roller brugeren skal have på samme linje):");
         System.out.println("1:Admin, 2:Pharmacist, 3:Foreman, 4:Operator");
         inp = scan.nextLine();
@@ -91,16 +92,16 @@ public class TUI {
                 int x = Character.getNumericValue(inp.charAt(i));
                 switch (x) {
                     case 1:
-                        newuser.addRole("Admin");
+                        user.addRole("Admin");
                         break;
                     case 2:
-                        newuser.addRole("Pharmacist");
+                        user.addRole("Pharmacist");
                         break;
                     case 3:
-                        newuser.addRole("Foreman");
+                        user.addRole("Foreman");
                         break;
                     case 4:
-                        newuser.addRole("Operator");
+                        user.addRole("Operator");
                         break;
                     default:
                         break;
@@ -109,6 +110,20 @@ public class TUI {
 
             }
         }
+    }
+
+    public UserDTO createUser() {
+
+        UserDTO newuser = new UserDTO();
+
+        String name = inputName();
+        newuser.setUserName(name);
+
+        String init = inputInit();
+        newuser.setIni(init);
+
+        addRolesToUser(newuser);
+
         newuser.setUserId(UserDTO.getCounter());
 
         UserDTO.setCounter(UserDTO.getCounter()+1);
