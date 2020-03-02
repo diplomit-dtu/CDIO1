@@ -1,3 +1,4 @@
+import com.sun.tools.javac.comp.Todo;
 import dal.IUserDAO;
 import dal.UserDAO;
 import tui.TUI;
@@ -8,6 +9,7 @@ import functionality.Functionality;
 public class Main {
     
     public static void main(String[] args){
+        //TODO fix (lasse)
         TUI tui = new TUI();
         Functionality f = new Functionality();
         UserDAO d = new UserDAO();

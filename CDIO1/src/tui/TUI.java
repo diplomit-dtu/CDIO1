@@ -82,6 +82,29 @@ public class TUI {
         return init;
     }
 
+    public String inputCPR() {
+        String cpr = "";
+        boolean check = false;
+        do {
+            System.out.println("Indtast brugerens CPR-nummer i formattet: DDMMYYxxxx");
+            cpr = scan.nextLine();
+            if (cpr.length() != 10) {
+                System.out.println("Forkert format");
+            } else {
+                try {
+                    int dd = Integer.parseInt(cpr.substring(0, 2));
+                    int mm = Integer.parseInt(cpr.substring(2, 4));
+                    int yy = Integer.parseInt(cpr.substring(4, 6));
+                    int xxxx = Integer.parseInt(cpr.substring(6, 10));
+                    check = true;
+                } catch (NumberFormatException e) {
+                    System.out.println("Forkert format");
+                }
+            }
+        } while (!check);
+        return cpr;
+    }
+
     public void addRolesToUser(UserDTO user) {
         String inp = "";
         System.out.println("Vælg Roler (skriv tallene for alle de roller brugeren skal have på samme linje):");
@@ -121,6 +144,8 @@ public class TUI {
 
         String init = inputInit();
         newuser.setIni(init);
+
+        newuser.setCpr(inputCPR());
 
         addRolesToUser(newuser);
 
