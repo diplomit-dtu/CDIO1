@@ -1,12 +1,9 @@
 package controller;
 
 import dal.IUserDAO;
-import dal.UserDAO;
 import dto.UserDTO;
 import functionality.IFunctionality;
 import tui.TUI;
-
-import java.util.List;
 
 public class UserLogic {
     
@@ -77,16 +74,25 @@ public class UserLogic {
             
             switch (choice){
                 case 1:
-                    userDTO.setUserName("");
+                    String newName = t.inputName();
+                    userDTO.setUserName(newName);
                     break;
                 case 2:
-                    userDTO.setIni("");
+                    String newIni = t.inputInit();
+                    userDTO.setIni(newIni);
                     break;
                 case 3:
-                    f.verifyPassword("");
+                    try{
+                        String newPassword = t.inputString("Skriv nyt kodeord: ");
+                        f.verifyPassword(newPassword);
+                        userDTO.setPassword(newPassword);
+                        
+                    }catch(Exception e) {
+                        System.out.println(e.getMessage() + "\n");
+                    }
                     break;
                 case 4:
-                    userDTO.addRole("");
+                    t.addRolesToUser(userDTO);
                     break;
             }
             

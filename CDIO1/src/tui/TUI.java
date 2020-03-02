@@ -140,12 +140,19 @@ public class TUI {
         System.out.println("Indtast ID: ");
 
         int id = scan.nextInt();
+        scan.nextLine();
         return id;
 
+    }
+    
+    public String outputString(String message){
+        System.out.println(message);
+        return scan.nextLine();
     }
     
     public String inputString(String message){
         System.out.println(message);
         return scan.nextLine();
     }
+    
 }

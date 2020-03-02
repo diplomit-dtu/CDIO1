@@ -9,7 +9,8 @@ public class UserDTO implements Serializable{
 	private static final long serialVersionUID = 4545864587995944260L;
 	private int	userId;                     
 	private String userName;                
-	private String ini;                 
+	private String ini;
+	private String password;
 	private List<String> roles;
 	//TODO denne counter skal ændres til 0 inden aflevering
 	private static int counter = 11;
@@ -20,6 +21,14 @@ public class UserDTO implements Serializable{
 	public UserDTO() {
 		this.roles = new ArrayList<>();
 	}
+	
+	public String getPassword(){
+	    return password;
+    }
+    
+    public void setPassword(String newPassword){
+	    this.password = newPassword;
+    }
 	
 	public int getUserId() {
 		return userId;
