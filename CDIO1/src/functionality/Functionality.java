@@ -26,10 +26,9 @@ public class Functionality implements IFunctionality {
         return IDs;
     }
     
-    public boolean verifyPassword(String pass) throws Exception {
-        
+    public boolean verify(UserDTO user, String pass) throws Exception {
         if (pass.length() < 6 || pass.length() > 50){ // length error
-            throw new Exception("length error");
+            throw new Exception("\n" + "length error");
         }
         
         boolean lowercase = false;
@@ -65,7 +64,19 @@ public class Functionality implements IFunctionality {
             }
             
             if (!mathcing){ // not allowed symbol error
-                throw new Exception("symbol error");
+                throw new Exception("\n" + "symbol error");
+            }
+            
+            Boolean nameInPass = false;
+            for (String name : user.getUserName().split(" ")) {
+                if (pass.contains(name)) {
+                    nameInPass = true;
+                    break;
+                }
+            }
+            
+            if (pass.contains(Integer.toString(user.getUserId())) || nameInPass) {
+                throw new Exception("information in password error");
             }
         }
         
@@ -89,7 +100,8 @@ public class Functionality implements IFunctionality {
             return true;
         }
         else { //not enough categories included error
-            throw new Exception("category error");
+            throw new Exception("\n" + "category error");
         }
     }
+    
 }
