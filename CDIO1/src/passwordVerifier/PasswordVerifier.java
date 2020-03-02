@@ -12,7 +12,7 @@ public class PasswordVerifier {
 
     public boolean verify(UserDTO user, String pass) throws Exception {
         if (pass.length() < 6 || pass.length() > 50){ // length error
-            throw new Exception("length error");
+            throw new Exception("\n" + "length error");
         }
 
         boolean lowercase = false;
@@ -48,7 +48,7 @@ public class PasswordVerifier {
             }
 
             if (!mathcing){ // not allowed symbol error
-                throw new Exception("symbol error");
+                throw new Exception("\n" + "symbol error");
             }
 
             Boolean nameInPass = false;
@@ -84,7 +84,7 @@ public class PasswordVerifier {
             return true;
         }
         else { //not enough categories included error
-            throw new Exception("category error");
+            throw new Exception("\n" + "category error");
         }
     }
 

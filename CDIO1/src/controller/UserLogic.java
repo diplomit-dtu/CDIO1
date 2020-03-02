@@ -40,8 +40,9 @@ public class UserLogic {
                     deleteUser();
                     break;
                 case 5:
+                    System.out.println("\n" + "Programmet lukkes...");
                     java.lang.System.exit(0); //Will exit the program with error code 0
-                    //break outer;
+                    
             }
         }
     }
@@ -50,7 +51,7 @@ public class UserLogic {
         try {
             d.createUser(t.createUser());
         }catch (IUserDAO.DALException e){
-            System.out.println(e.getMessage() + "\n");
+            System.out.println("\n" + e.getMessage());
         }
     }
     
@@ -58,7 +59,7 @@ public class UserLogic {
         try {
             t.listUsers(d.getUserList());
         } catch (IUserDAO.DALException e) {
-            System.out.println(e.getMessage() + "\n");
+            System.out.println("\n" + e.getMessage());
         }
     }
     
@@ -88,7 +89,7 @@ public class UserLogic {
                         userDTO.setPassword(newPassword);
                         
                     }catch(Exception e) {
-                        System.out.println(e.getMessage() + "\n");
+                        System.out.println("\n" + e.getMessage());
                     }
                     break;
                 case 4:
@@ -97,11 +98,11 @@ public class UserLogic {
             }
             
         } catch(userIDNotFound e){
-            System.out.println(e.getMessage() + "\n");
+            System.out.println("\n" + e.getMessage());
         } catch (IUserDAO.DALException e) {
-            System.out.println(e.getMessage() + "\n");
+            System.out.println("\n" + e.getMessage());
         } catch (Exception e) {
-            System.out.println(e.getMessage() + "\n");
+            System.out.println("\n" + e.getMessage());
         }
     }
     
@@ -112,9 +113,9 @@ public class UserLogic {
            validateID(id);
            d.deleteUser(id);
        } catch (userIDNotFound e){
-           System.out.println(e.getMessage() + "\n");
+           System.out.println("\n" + e.getMessage());
        }catch (IUserDAO.DALException e){
-           System.out.println(e.getMessage() + "\n");
+           System.out.println("\n" + e.getMessage());
        }
     }
     
@@ -122,9 +123,9 @@ public class UserLogic {
         try {
             int[] IDs = f.getUserIDs(d.getUserList());
             if( !(f.isUserIDPresent(ID, IDs)) )
-                throw new userIDNotFound("ID ikke fundet");
+                throw new userIDNotFound("ID'et blev ikke fundet");
         } catch (IUserDAO.DALException e) {
-            e.printStackTrace();
+            System.out.println("\n" + e.getMessage());;
         }
     }
     

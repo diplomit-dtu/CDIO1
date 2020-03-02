@@ -15,13 +15,15 @@ public class TUI {
     }
 
     public int showMenu(String message, String... menuItems){
-        System.out.println("#########################################");
+        System.out.println("\n" + "#########################################");
         System.out.println(message);
         
         //Display menu
         for (int i = 1; i < menuItems.length+1; i++) {
             System.out.println(i + ". " + menuItems[i-1]);
         }
+    
+        System.out.println("#########################################" + "\n");
         
         int choice = 0;
         
@@ -30,7 +32,7 @@ public class TUI {
             choice = inputNumber();
             
             if(choice < 1 || choice > menuItems.length+1)
-                System.out.println("Indtast venligst et nummer fra listen");
+                System.out.println("\n" + "Indtast venligst et nummer fra listen:");
             else
                 break;
         }
@@ -40,7 +42,6 @@ public class TUI {
     
     //Gets a number from the user
     private int inputNumber(){
-        System.out.println("#########################################");
             int choice;
         
             while(true){
@@ -48,7 +49,7 @@ public class TUI {
                     choice = Integer.parseInt(scan.nextLine());
                     break;
                 } catch(NumberFormatException e){
-                    System.out.println("Indtast venligst et tal");
+                    System.out.println("\n" + "Indtast venligst et tal: ");
                 }
             }
             
@@ -58,10 +59,10 @@ public class TUI {
     public String inputName() {
         String name = "";
         do {
-            System.out.println("Indtast Navn: ");
+            System.out.println("\n" + "Indtast navn: ");
             name = scan.nextLine();
             if (name.equals("")){
-                System.out.println("Brugeren skal have et navn");
+                System.out.print("\n" + "Brugeren skal have et navn");
             }
         } while (name.equals(""));
         return name;
@@ -71,10 +72,10 @@ public class TUI {
         String init = "";
         boolean check = false;
         do {
-            System.out.println("Indtast Initial: ");
+            System.out.println("\n" + "Indtast Initial: ");
             init = scan.nextLine();
             if (init.length() < 2 || init.length() > 4) {
-                System.out.println("Initialer skal have mellem 2 - 4 bogstaver");
+                System.out.print("\n" + "Initialer skal have mellem 2 - 4 bogstaver");
             } else {
                 check = true;
             }
@@ -107,7 +108,7 @@ public class TUI {
 
     public void addRolesToUser(UserDTO user) {
         String inp = "";
-        System.out.println("Vælg Roler (skriv tallene for alle de roller brugeren skal have på samme linje):");
+        System.out.println("\n" + "Vælg Roler (skriv tallene for alle de roller brugeren skal have på samme linje):");
         System.out.println("1:Admin, 2:Pharmacist, 3:Foreman, 4:Operator");
         inp = scan.nextLine();
         for (int i = 0; i < inp.length(); i++) { // Will not be able to have more than 10 different roles this way.
@@ -162,10 +163,18 @@ public class TUI {
         }
     }
     public int getUserID(){
-        System.out.println("Indtast ID: ");
-
-        int id = scan.nextInt();
-        scan.nextLine();
+        
+        System.out.println("\n" + "Indtast ID: ");
+        int id;
+        
+        while(true){
+            id = inputNumber();
+            if(id >= 11 && id <= 99)
+                break;
+            else
+                System.out.println("\n" + "Indtast et ID fra 11-99:");
+        }
+        
         return id;
 
     }
