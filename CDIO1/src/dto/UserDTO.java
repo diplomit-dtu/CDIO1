@@ -20,6 +20,7 @@ public class UserDTO implements Serializable{
 	
 	public UserDTO() {
 		this.roles = new ArrayList<>();
+		this.password = "SkiftMig!";
 	}
 	
 	public String getPassword(){

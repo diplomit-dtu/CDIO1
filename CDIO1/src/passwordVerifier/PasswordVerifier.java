@@ -1,5 +1,7 @@
 package passwordVerifier;
 
+import dto.UserDTO;
+
 public class PasswordVerifier {
     //                        !   +   -   .   =   ?   _
     private int[] specials = {33, 43, 45, 46, 61, 63, 95};
@@ -8,7 +10,7 @@ public class PasswordVerifier {
 
     }
 
-    public boolean verify(String pass) throws Exception {
+    public boolean verify(UserDTO user, String pass) throws Exception {
         if (pass.length() < 6 || pass.length() > 50){ // length error
             throw new Exception("length error");
         }
@@ -47,6 +49,18 @@ public class PasswordVerifier {
 
             if (!mathcing){ // not allowed symbol error
                 throw new Exception("symbol error");
+            }
+
+            Boolean nameInPass = false;
+            for (String name : user.getUserName().split(" ")) {
+                if (pass.contains(name)) {
+                    nameInPass = true;
+                    break;
+                }
+            }
+
+            if (pass.contains(Integer.toString(user.getUserId())) || nameInPass) {
+                throw new Exception("information in password error");
             }
         }
 
