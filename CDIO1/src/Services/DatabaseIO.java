@@ -53,6 +53,23 @@ public class DatabaseIO {
         }
     }
 
+    public ResultSet Query(String query){
+        ResultSet result = null;
+        if(!connected){
+            System.out.println("Connect to a DB first");
+        } else{
+            try {
+                stmt = conn.createStatement();
+                result = stmt.executeQuery(query);
+                System.out.println(query+" has been executed");
+            } catch (SQLException e) {
+                System.out.println(query+" failed to execute");
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
     public void CloseConnection(){
         if(connected){
             try {
