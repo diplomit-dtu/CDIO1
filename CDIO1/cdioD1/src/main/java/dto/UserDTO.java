@@ -14,6 +14,13 @@ public class UserDTO implements Serializable{
   private String cpr;
   private String password;
 
+  public String getCpr() {
+    return cpr;
+  }
+
+  public String getPassword() {
+    return password;
+  }
 
   public UserDTO() {
     this.roles = new ArrayList<>(); }
