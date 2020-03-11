@@ -8,17 +8,13 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema User_Database2
 -- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `User_Database2` DEFAULT CHARACTER SET utf8 ;
+USE `User_Database2` ;
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `User_Database` DEFAULT CHARACTER SET utf8 ;
-USE `User_Database` ;
-
--- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table 'user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `users` (
   `UserID` INT NOT NULL,
@@ -29,13 +25,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Role` ENUM('Admin', 'Pharmacist', 'Foreman', 'Operator') NULL,
   PRIMARY KEY (`UserID`));
 
-  INSERT  users values
-	(0,'Silas','si','0123456789','password','Admin'),
-	(1,'Alexander','Alex','0123456789','password2','Pharmacist'),
-	(2,'Christoffer','Chri	','0123456789','password3','Foreman'),
-	(3,'Bubbi','Bub','0123456789','password3','Operator'),
-	(4,'Sejr','se','0123456789','password5','Admin'),
-	(5,'Andreas','And','0123456789','password6','Admin');
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

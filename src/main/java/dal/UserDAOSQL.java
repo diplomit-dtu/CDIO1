@@ -50,7 +50,6 @@ public class UserDAOSQL implements IUserDAO {
             _statement = _connection.createStatement();
         } catch (SQLException e) {
             createDummyDatabase();
-            throw new DALException("Cannot connect to database, creating new database");
         }
     }
 
@@ -65,17 +64,17 @@ public class UserDAOSQL implements IUserDAO {
 
         //Getting the connection
         String mysqlUrl = "jdbc:mysql://localhost/" + _END;
-        Connection con = null;
         try {
-            con = DriverManager.getConnection(mysqlUrl,_username,_password);
+            _connection = DriverManager.getConnection(mysqlUrl,_username,_password);
+            _statement = _connection.createStatement();
         } catch (SQLException ex) {
             throw new DALException("Could not create connection, try another username and password");
         }
         System.out.println("Connection established......");
         //Initialize the script runner
-        ScriptRunner sr = new ScriptRunner(con);
+        ScriptRunner sr = new ScriptRunner(_connection);
         //Creating a reader object
-        URL res = getClass().getClassLoader().getResource("User_Database.sql");
+        URL res = getClass().getClassLoader().getResource("User_Database2.sql");
         File file = null;
         try {
             file = Paths.get(res.toURI()).toFile();
@@ -90,7 +89,12 @@ public class UserDAOSQL implements IUserDAO {
             throw new DALException("could not create reader");
         }
         //Running the script
-            sr.runScript(reader);
+        sr.runScript(reader);
+        _url = "jdbc:mysql://localhost:3306/User_Database2" + _END;
+        try{
+            UserDTO user1 = new UserDTO(0,"Admin","A","0123456789","password","Admin");
+            createUser(user1);
+        } catch (Exception ignored){}
     }
 
     private void closeConnection() throws DALException {
@@ -119,7 +123,6 @@ public class UserDAOSQL implements IUserDAO {
                 user.addRole(resultSet.getString("Roles"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DALException("Cannot get user");
         }
 
@@ -140,9 +143,10 @@ public class UserDAOSQL implements IUserDAO {
                 list.get(list.size() - 1).setIni(resultSet.getString("Ini"));
                 list.get(list.size() - 1).setUserCpr(resultSet.getString("cpr"));
                 list.get(list.size() - 1).setPassword(resultSet.getString("Password"));
-                list.get(list.size() - 1).addRole(resultSet.getString("Roles"));
+                list.get(list.size() - 1).addRole(resultSet.getString("Role"));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DALException("Could not get user list");
         }
         closeConnection();
@@ -155,7 +159,7 @@ public class UserDAOSQL implements IUserDAO {
         try {
             PreparedStatement ps =
                     _connection.prepareStatement(
-                            "INSERT INTO users(UserID,UserName,Ini,cpr,Password,Roles) VALUES (?,?,?,?,?,?)");
+                            "INSERT INTO users(UserID,UserName,Ini,cpr,Password,Role) VALUES (?,?,?,?,?,?)");
             ps.setInt(1, user.getUserId());
             ps.setString(2, user.getUserName());
             ps.setString(3, user.getIni());
