@@ -75,17 +75,18 @@ public class CLI{
 
     void createUser1() throws IUserDAO.DALException {
         int id = -1;
+        String input;
 
         System.out.println("Indtast unikt ID (11-99) (skriv STOP for at afbryde): ");
         while(id == -1){
-            String input = in.nextLine();
+            input = in.nextLine();
             if(input.strip() == "STOP"){
                 return;
             }
             try{
                 id = Integer.parseInt(input);
-            }catch(numberFormatException e){
-                System.out.println("Ikke korrekt input, prøv igen: ")
+            }catch(NumberFormatException e){
+                System.out.println("Ikke korrekt input, prøv igen: ");
                 continue;
             }
         }
@@ -104,6 +105,8 @@ public class CLI{
             return;
         }
         String cpr = input;
+
+        // Assign roles
 
 
     }
