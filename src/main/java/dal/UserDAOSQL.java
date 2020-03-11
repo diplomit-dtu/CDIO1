@@ -55,7 +55,7 @@ public class UserDAOSQL implements IUserDAO {
     }
 
     private void createDummyDatabase() throws DALException {
-        System.out.println("Creating dummy database,");
+        System.out.println("Creating dummy database");
 
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
@@ -63,19 +63,20 @@ public class UserDAOSQL implements IUserDAO {
             throw new DALException("could not create driver");
         }
 
-            //Getting the connection
-            String mysqlUrl = "jdbc:mysql://localhost/";
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://localhost/" + _END;
         Connection con = null;
         try {
-            con = DriverManager.getConnection(mysqlUrl, "root", "password");
+            con = DriverManager.getConnection(mysqlUrl,_username,_password);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             throw new DALException("Could not create connection");
         }
         System.out.println("Connection established......");
-            //Initialize the script runner
-            ScriptRunner sr = new ScriptRunner(con);
-            //Creating a reader object
-            URL res = getClass().getClassLoader().getResource("User_Database.sql");
+        //Initialize the script runner
+        ScriptRunner sr = new ScriptRunner(con);
+        //Creating a reader object
+        URL res = getClass().getClassLoader().getResource("User_Database.sql");
         File file = null;
         try {
             file = Paths.get(res.toURI()).toFile();
