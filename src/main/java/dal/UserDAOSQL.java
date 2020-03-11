@@ -27,7 +27,7 @@ public class UserDAOSQL implements IUserDAO{
      * @param port Port of the SQL database
      * @param database Name of database
      */
-    public UserDAOSQL(String host, String port, String database) throws DALException {
+    public UserDAOSQL(String host, String port, String database){
         this._url = "jdbc:mysql://" + host + ":" + port + "/" + database + _END;
     }
     private void openConnection() throws DALException {
@@ -52,15 +52,7 @@ public class UserDAOSQL implements IUserDAO{
             throw new DALException("Cannot close connection to database");
         }
     }
-    //rightPad method pads short columnnames and short columnvalues to same width
-    private static String rightPad(String stringToPad, int width){
-        StringBuilder stringBuilder = new StringBuilder(stringToPad);
-        while(stringBuilder.length() <= width){
-            stringBuilder.append(" ");
-        }
-        stringToPad = stringBuilder.toString();
-        return stringToPad;
-    }
+
     @Override
     public UserDTO getUser(int userID) throws DALException {
         openConnection();
@@ -99,7 +91,7 @@ public class UserDAOSQL implements IUserDAO{
                 list.get(list.size() - 1).setIni(resultSet.getString("Ini"));
                 list.get(list.size() - 1).setUserCpr(resultSet.getString("cpr"));
                 list.get(list.size() - 1).setPassword(resultSet.getString("Password"));
-                list.get(list.size()-1).addRole(resultSet.getString("Roles"));
+                list.get(list.size() - 1).addRole(resultSet.getString("Roles"));
             }
         } catch (SQLException e){
             throw new DALException("Could not get user list");
