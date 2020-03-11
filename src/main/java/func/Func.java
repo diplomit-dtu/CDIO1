@@ -5,6 +5,7 @@ import dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Func implements IFunc {
@@ -13,14 +14,55 @@ public class Func implements IFunc {
     public Func(IUserDAO dao){this.dao = dao;}
 
     @Override
-    public UserDTO createUser(int userID, String userName, String cpr, String password, List<String> roles) throws IUserDAO.DALException {
+    public UserDTO createUser(int userID, String userName, String cpr, List<String> roles) throws UserFormatException {
+        List<UserFormatException.errortypes> errorlist = new ArrayList<>();
         UserDTO user = new UserDTO();
+        // Check ID
+        if(!(11<=userID && userID<=99)){
+           errorlist.add(UserFormatException.errortypes.ID);
+        }
+
+        // Check username
+        if(2<=userName.length() && userName.length()<=20){
+            errorlist.add(UserFormatException.errortypes.username);
+        }
+
+        // Check CPR
+        boolean isInteger=true;
+        try{
+            int test = Integer.parseInt(cpr.substring(0,6));
+            test = Integer.parseInt(cpr.substring(8,12));
+        }catch(NumberFormatException e){
+            isInteger=false;
+        }
+        if(!(isInteger && cpr.substring(6,7).equals("-"))){
+            errorlist.add(UserFormatException.errortypes.CPR);
+        }
+        // Check roles
+        List<String> cpyRoles = new ArrayList<>(roles);
+        cpyRoles.remove("Administrator");
+        cpyRoles.remove("Formand");
+        cpyRoles.remove("Farmaceut");
+        cpyRoles.remove("Operatør");
+        if(cpyRoles.size()!=0){
+            errorlist.add(UserFormatException.errortypes.roles);
+        }
+        //TODO: Check password
+
+        if(errorlist.size() > 0) {
+            throw new UserFormatException("One or more user paramaters are not correctly formatted",errorlist);
+        }
         user.setUserId(userID);
         user.setUserName(userName);
         user.setUserCpr(cpr);
-        user.setPassword(password);
         user.setRoles(roles);
-        dao.createUser(user);
+
+        try {
+            dao.createUser(user);
+        }catch(IUserDAO.DALException e){
+            //TODO: make better
+            System.out.println("WRONGI!!!");
+        }
         return user;
     }
 
@@ -40,6 +82,7 @@ public class Func implements IFunc {
         dao.deleteUser(userID);
         return user;
     }
+
 
     public  String newPassword(){
         int min = 6;
