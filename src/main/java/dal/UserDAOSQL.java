@@ -62,17 +62,28 @@ public class UserDAOSQL implements IUserDAO{
         return stringToPad;
     }
     @Override
-    public UserDTO getUser(int userId) throws DALException {
+    public UserDTO getUser(int userID) throws DALException {
         openConnection();
+        UserDTO user = new UserDTO();
         try {
-            ResultSet resultSet = _statement.executeQuery("SELECT * FROM Users WHERE UserID=userId");
-            ResultSetMetaData resultSetMetaData =resultSet.getMetaData();
+            PreparedStatement ps = _connection.prepareStatement("SELECT * FROM Users WHERE UserID=?");
+            ps.setInt(1,userID);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                user.setUserId(resultSet.getInt("UserID"));
+                user.setUserName(resultSet.getString("UserName"));
+                user.setIni(resultSet.getString("Ini"));
+                user.setUserCpr(resultSet.getString("cpr"));
+                user.setPassword(resultSet.getString("Password"));
+                user.addRole(resultSet.getString("Roles"));
+            }
         } catch (Exception e){
+            e.printStackTrace();
             throw new DALException("Cannot get user");
         }
 
         closeConnection();
-        return null;
+        return user;
     }
 
     @Override
@@ -99,6 +110,21 @@ public class UserDAOSQL implements IUserDAO{
 
     @Override
     public void createUser(UserDTO user) throws DALException {
+        openConnection();
+        try {
+            PreparedStatement ps = _connection.prepareStatement("INSERT INTO users(UserID,UserName,Ini,cpr,Password,Roles) VALUES (?,?,?,?,?,?)");
+            ps.setInt(1,user.getUserId());
+            ps.setString(2,user.getUserName());
+            ps.setString(3,user.getIni());
+            ps.setString(4,user.getCpr());
+            ps.setString(5,user.getPassword());
+            ps.setString(6,user.getRoles().get(0));
+            ps.executeUpdate();
+        } catch (SQLException e){
+            throw new DALException("Cannot create new user. Check for unique ID");
+        }
+
+        closeConnection();
 
     }
 

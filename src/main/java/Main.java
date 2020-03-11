@@ -15,6 +15,7 @@ public class Main {
                 dao.getUserList()) {
             System.out.println(user);
         }
+        System.out.println(dao.getUser(2));
         //IFunc func = new Func(dao);
         //CLI cli = new CLI(func, in);
         //cli.run();
