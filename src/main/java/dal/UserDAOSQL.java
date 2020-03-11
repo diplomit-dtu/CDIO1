@@ -1,11 +1,14 @@
 package dal;
 
 import dto.UserDTO;
+import org.apache.ibatis.jdbc.ScriptRunner;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 public class UserDAOSQL implements IUserDAO{
     //Private final attributes
@@ -18,8 +21,8 @@ public class UserDAOSQL implements IUserDAO{
     private Statement _statement;
 
     //Optional
-    private String _username = "SilasRindorf";
-    private String _password = "trappeSumpTun";
+    private String _username = "admin";
+    private String _password = "password";
 
     /**
      * Uses a database to
@@ -27,8 +30,10 @@ public class UserDAOSQL implements IUserDAO{
      * @param port Port of the SQL database
      * @param database Name of database
      */
-    public UserDAOSQL(String host, String port, String database){
+    public UserDAOSQL(String host, String port, String database,String username, String password){
         this._url = "jdbc:mysql://" + host + ":" + port + "/" + database + _END;
+        this._username = username;
+        this._password = password;
     }
     private void openConnection() throws DALException {
         try {
@@ -41,7 +46,25 @@ public class UserDAOSQL implements IUserDAO{
             _connection = DriverManager.getConnection(_url,_username,_password);
             _statement = _connection.createStatement();
         } catch (SQLException e) {
-            throw new DALException("Cannot connect to database");
+            createDummyDatabase();
+            throw new DALException("Cannot connect to database, creating new database");
+        }
+    }
+    private void createDummyDatabase() throws DALException {
+        try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://localhost/talakai_noppi";
+        Connection con = DriverManager.getConnection(mysqlUrl, "root", "password");
+        System.out.println("Connection established......");
+        //Initialize the script runner
+        ScriptRunner sr = new ScriptRunner(con);
+        //Creating a reader object
+        Reader reader = new BufferedReader(new FileReader("E:\\sampleScript.sql"));
+        //Running the script
+        sr.runScript(reader);
+        } catch (Exception e){
+            throw new DALException("Could not create new dummy database");
         }
     }
     private void closeConnection() throws DALException {
@@ -104,7 +127,9 @@ public class UserDAOSQL implements IUserDAO{
     public void createUser(UserDTO user) throws DALException {
         openConnection();
         try {
-            PreparedStatement ps = _connection.prepareStatement("INSERT INTO users(UserID,UserName,Ini,cpr,Password,Roles) VALUES (?,?,?,?,?,?)");
+            PreparedStatement ps =
+                    _connection.prepareStatement(
+                            "INSERT INTO users(UserID,UserName,Ini,cpr,Password,Roles) VALUES (?,?,?,?,?,?)");
             ps.setInt(1,user.getUserId());
             ps.setString(2,user.getUserName());
             ps.setString(3,user.getIni());
