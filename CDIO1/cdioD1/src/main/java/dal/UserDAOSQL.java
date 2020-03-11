@@ -2,10 +2,10 @@ package dal;
 
 import dto.UserDTO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 public class UserDAOSQL implements IUserDAO{
     //Private final attributes
@@ -15,13 +15,14 @@ public class UserDAOSQL implements IUserDAO{
     //Changing attributes
     private String _url;
     private Connection _connection;
+    private Statement _statement;
 
     //Optional
-    private String _username = "Admin";
-    private String _password = "password";
+    private String _username = "SilasRindorf";
+    private String _password = "trappeSumpTun";
 
     /**
-     * Uses a database
+     * Uses a database to
      * @param host Address of the host
      * @param port Port of the SQL database
      * @param database Name of database
@@ -33,25 +34,42 @@ public class UserDAOSQL implements IUserDAO{
         try {
             Class.forName(_DRIVER);
         } catch (ClassNotFoundException e) {
-            throw new DALException("Class not found");
+            throw new DALException("openConnection Class not found");
         }
+
         try {
             _connection = DriverManager.getConnection(_url,_username,_password);
+            _statement = _connection.createStatement();
         } catch (SQLException e) {
             throw new DALException("Cannot connect to database");
         }
     }
     private void closeConnection() throws DALException {
         try {
+            _statement.close();
             _connection.close();
         } catch (SQLException e){
             throw new DALException("Cannot close connection to database");
         }
     }
+    //rightPad method pads short columnnames and short columnvalues to same width
+    private static String rightPad(String stringToPad, int width){
+        StringBuilder stringBuilder = new StringBuilder(stringToPad);
+        while(stringBuilder.length() <= width){
+            stringBuilder.append(" ");
+        }
+        stringToPad = stringBuilder.toString();
+        return stringToPad;
+    }
     @Override
     public UserDTO getUser(int userId) throws DALException {
         openConnection();
-
+        try {
+            ResultSet resultSet = _statement.executeQuery("SELECT * FROM Users WHERE UserID=userId");
+            ResultSetMetaData resultSetMetaData =resultSet.getMetaData();
+        } catch (Exception e){
+            throw new DALException("Cannot get user");
+        }
 
         closeConnection();
         return null;
@@ -59,7 +77,31 @@ public class UserDAOSQL implements IUserDAO{
 
     @Override
     public List<UserDTO> getUserList() throws DALException {
-        return null;
+        openConnection();
+        ArrayList<UserDTO> list = new ArrayList<>();
+        try {
+            ResultSet resultSet = _statement.executeQuery("SELECT * FROM Users");
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+            while (resultSet.next()) {
+                list.add(new UserDTO());
+                try {
+                    list.get(list.size()-1).setUserId(Integer.parseInt(resultSetMetaData.getColumnName(0)));
+                } catch (Exception ignored){}
+                list.get(list.size()-1).setUserName(resultSetMetaData.getColumnName(1));
+                list.get(list.size()-1).setIni(resultSetMetaData.getColumnName(2));
+                list.get(list.size()-1).setUserCpr(resultSetMetaData.getColumnName(3));
+                list.get(list.size()-1).setPassword(resultSetMetaData.getColumnName(4));
+            }
+
+        } catch (SQLException e){
+            throw new DALException("Could not get user list");
+        }
+
+
+
+        closeConnection();
+        return list;
     }
 
     @Override
