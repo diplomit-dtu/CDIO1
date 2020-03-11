@@ -4,8 +4,11 @@ import dto.UserDTO;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +54,20 @@ public class UserDAOSQL implements IUserDAO{
         }
     }
     private void createDummyDatabase() throws DALException {
+        System.out.println("Creating dummy database,");
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
-        String mysqlUrl = "jdbc:mysql://localhost/talakai_noppi";
+        String mysqlUrl = "jdbc:mysql://localhost/";
         Connection con = DriverManager.getConnection(mysqlUrl, "root", "password");
         System.out.println("Connection established......");
         //Initialize the script runner
         ScriptRunner sr = new ScriptRunner(con);
         //Creating a reader object
-        Reader reader = new BufferedReader(new FileReader("E:\\sampleScript.sql"));
+            URL res = getClass().getClassLoader().getResource("User_Database.sql");
+            File file = Paths.get(res.toURI()).toFile();
+            String absolutePath = file.getAbsolutePath();
+        Reader reader = new BufferedReader(new FileReader(absolutePath));
         //Running the script
         sr.runScript(reader);
         } catch (Exception e){
