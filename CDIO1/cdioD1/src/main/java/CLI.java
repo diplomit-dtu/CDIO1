@@ -1,11 +1,10 @@
+import dal.IUserDAO;
+import dto.UserDTO;
 import func.IFunc;
 
-import java.util.Arrays;
-import java.util.InputMismatchException;
+import java.sql.SQLOutput;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
-
-import java.util.List;
-import java.util.Scanner;
 
 public class CLI{
     final IFunc func;
@@ -42,9 +41,17 @@ public class CLI{
         }else if(input == 2){
             listUsers2();
         }else if(input == 3){
-            updateUser3();
+            try {
+                updateUser3();
+            } catch (IUserDAO.DALException e) {
+                e.printStackTrace();
+            }
         }else if(input == 4){
-            deleteUser4();
+            try {
+                deleteUser4();
+            } catch (IUserDAO.DALException e) {
+                e.printStackTrace();
+            }
         }else if(input == 5){
             System.out.println("Lukker ned...");
             try {
@@ -74,11 +81,69 @@ public class CLI{
 
     }
 
-    void updateUser3(){
+    void updateUser3() throws IUserDAO.DALException {
+        String useless;
+        System.out.println("Indtast user ID, som skal Updateres: ");
+        int startID = in.nextInt();
+        useless = in.nextLine();
+        UserDTO user = func.getUser(startID);
+        System.out.println("Hvilken værdie vil du ændre: ");
+        System.out.println("1) ID");
+        System.out.println("2) Navn");
+        System.out.println("3) Cpr") ;
+        System.out.println("4) Password");
+        System.out.println("5) Role");
+        int choice = getInput(Arrays.asList(1, 2, 3, 4, 5));
+
+        switch (choice){
+            case 1:
+                System.out.println("Indtast nyt ID:");
+                user.setUserId(in.nextInt());
+                useless = in.nextLine();
+                break;
+            case 2:
+                System.out.println("Indtast nyt navn:");
+                user.setUserName(in.nextLine());
+                break;
+            case 3:
+                System.out.println("Indtast nyt cpr: ");
+                user.setUserCpr(in.nextLine());
+                break;
+            case 4:
+                System.out.println("Indtast nyt Password: ");
+                user.setPassword(in.nextLine());
+                break;
+            case 5:
+                while(true) {
+                    ArrayList<String> userRoles = new ArrayList<String>();
+                    System.out.println("Indtast ny role eller exit");
+                    System.out.println("Roles kan være: Admin, Pharmacist, Foreman, Operator, exit");
+                    String sChoice = getSInput(Arrays.asList("Admin", "Pharmacist", "Foreman", "Operator", "exit"));
+
+                    if(!sChoice.equals("")){
+                        if(!(userRoles.contains(sChoice))){
+                            userRoles.add(sChoice);
+                        }
+                    }else if(sChoice.equals("exit")){
+                        if(!userRoles.isEmpty()){
+                            user.setRoles(userRoles);
+                        }
+                        break;
+                    }
+                }
+                break;
+            default:
+                System.out.println("Fejl i Switch");
+        }
+        func.deleteUser(startID);
+        func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getPassword(), user.getRoles());
 
     }
 
-    void deleteUser4(){
+    void deleteUser4() throws IUserDAO.DALException {
+        System.out.println("Indtast user ID, som skal slettes: ");
+        System.out.println("User: " + func.deleteUser(in.nextInt()) + " er slettet" );
+
 
     }
 
@@ -96,6 +161,14 @@ public class CLI{
 
         if(!validChoices.contains(choice)){
             return -1;
+        }
+        return choice;
+    }
+    String getSInput(List<String> validChoices){
+        String choice = "";
+        choice = in.nextLine();
+        if(!validChoices.contains(choice)){
+            return "";
         }
         return choice;
     }
