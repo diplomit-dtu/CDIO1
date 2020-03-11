@@ -22,7 +22,7 @@ public class UserDAOSQL implements IUserDAO {
     private Statement _statement;
 
     //Optional
-    private String _username = "admin";
+    private String _username = "root";
     private String _password = "password";
 
     /**
@@ -69,8 +69,7 @@ public class UserDAOSQL implements IUserDAO {
         try {
             con = DriverManager.getConnection(mysqlUrl,_username,_password);
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new DALException("Could not create connection");
+            throw new DALException("Could not create connection, try another username and password");
         }
         System.out.println("Connection established......");
         //Initialize the script runner
