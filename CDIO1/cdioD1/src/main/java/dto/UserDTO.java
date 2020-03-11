@@ -26,6 +26,7 @@ public class UserDTO implements Serializable{
     this.roles = new ArrayList<>(); }
 
   public void setUserCpr(String Cpr){ this.cpr = Cpr;}
+  public String getUserCpr(){return cpr;}
 
   public int getUserId() {
     return userId;
@@ -40,6 +41,7 @@ public class UserDTO implements Serializable{
     this.userName = userName;
   }
   public void setPassword(String pass){this.password = pass;}
+  public String getPassword(){return password}
 
   public String getIni() {
     return ini;
