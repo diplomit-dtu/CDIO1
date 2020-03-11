@@ -41,7 +41,6 @@ public class UserDTO implements Serializable{
     this.userName = userName;
   }
   public void setPassword(String pass){this.password = pass;}
-  public String getPassword(){return password;}
 
   public String getIni() {
     return ini;
