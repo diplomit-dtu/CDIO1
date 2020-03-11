@@ -27,13 +27,16 @@ public class Func implements IFunc {
 
         // Check CPR
         boolean isInteger=true;
+        String hyphen = "";
         try{
             int test = Integer.parseInt(cpr.substring(0,6));
             test = Integer.parseInt(cpr.substring(8,12));
-        }catch(NumberFormatException e){
+            hyphen = cpr.substring(6,7);
+        }catch(NumberFormatException | StringIndexOutOfBoundsException e){
             isInteger=false;
+            hyphen = "";
         }
-        if(!(isInteger && cpr.substring(6,7).equals("-"))){
+        if(!(isInteger && hyphen == "-")){
             errorlist.add(UserFormatException.errortypes.CPR);
         }
         // Check roles
