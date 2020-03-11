@@ -112,9 +112,64 @@ public class CLI{
         String cpr = input;
 
         // Assign roles
-
+        int choice = -1;
+        boolean admin=false;
+        boolean farma=false;
+        boolean formand=false;
+        boolean operator=false;
+        while(choice != 5){
+            choice = -1;
+            System.out.println("1) Administratør" + " " +isSelected(admin));
+            System.out.println("2) Farmaceut" + " " + isSelected(farma));
+            System.out.println("3) Formand " + " " +  isSelected(formand));
+            System.out.println("4) Operatør" + " " +  isSelected(operator));
+            System.out.println("5) Gem rolletildeling og opret bruger");
+            input = in.nextLine();
+            choice = getInput(Arrays.asList(1,2,3,4,5));
+            if(choice == -1){
+                System.out.println("Ikke korrekt input, prøv igen: ");
+                continue;
+            }
+            if(choice == 1){
+                admin=!admin;
+            }else if(choice == 2){
+                farma=!farma;
+            }else if(choice == 3){
+                formand = !formand;
+            }else if(choice == 4){
+                operator = !operator;
+            }
+        }
+        List<String> roles = new ArrayList<>();
+        if(admin){
+            roles.add("Administrator");
+        }
+        if(farma){
+            roles.add("Farmaceut");
+        }
+        if(formand){
+            roles.add("Formand");
+        }
+        if(operator){
+            roles.add("Operatør");
+        }
+        try {
+            func.createUser(id, userName, cpr, roles);
+        }catch(IFunc.UserFormatException e){
+            //TODO:make more neat
+            System.out.println("WRONG!!!!");
+        }
 
     }
+
+    String isSelected(boolean b){
+        if(b){
+            return "✓";
+        }else{
+            return "\uD83D\uDDF4";
+        }
+    }
+
 
     void listUsers2(){
 
@@ -175,7 +230,13 @@ public class CLI{
                 System.out.println("Fejl i Switch");
         }
         func.deleteUser(startID);
-        func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getPassword(), user.getRoles());
+        try {
+            func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getRoles());
+        }catch(IFunc.UserFormatException e){
+            //TODO: Make better
+            System.out.println("WRONG!!!");
+
+        }
 
     }
 
