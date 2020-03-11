@@ -157,7 +157,22 @@ public class CLI{
             func.createUser(id, userName, cpr, roles);
         }catch(IFunc.UserFormatException e){
             //TODO:make more neat
-            System.out.println("WRONG!!!!");
+            System.out.println("En eller flere parametre er ukorrekt formateret:");
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.CPR)){
+                System.out.println("- CPR er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.ID)){
+                System.out.println("- ID er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.roles)){
+                System.out.println("- Rolleangivelse er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.username)){
+                System.out.println("- Brugernavn er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.password)){
+                System.out.println("- Kodeord er ukorrekt formateret");
+            }
         }
 
     }
