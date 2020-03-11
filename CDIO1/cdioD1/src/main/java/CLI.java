@@ -60,11 +60,12 @@ public class CLI{
             }
             return;
         }
+        mainMenu0();
     }
 
     String screen0Mainmenu(){
         StringBuilder acc = new StringBuilder();
-        acc.append("1) Hovedmenu \n");
+        acc.append("1) Opret bruger \n");
         acc.append("2) List brugere \n");
         acc.append("3) Opdater bruger \n");
         acc.append("4) Slet bruger \n");
@@ -73,9 +74,38 @@ public class CLI{
     }
 
     void createUser1() throws IUserDAO.DALException {
-        UserDTO user = func.getUser(13);
-        System.out.println(
-        userStrFormat(user));
+        int id = -1;
+
+        System.out.println("Indtast unikt ID (11-99) (skriv STOP for at afbryde): ");
+        while(id == -1){
+            String input = in.nextLine();
+            if(input.strip() == "STOP"){
+                return;
+            }
+            try{
+                id = Integer.parseInt(input);
+            }catch(numberFormatException e){
+                System.out.println("Ikke korrekt input, prøv igen: ")
+                continue;
+            }
+        }
+
+
+        System.out.println("Indtast brugernavn (skriv STOP for at afbryde): ");
+        input = in.nextLine();
+        if(input.strip() == "STOP"){
+            return;
+        }
+        String userName = input;
+
+        System.out.println("Indtast CPR (skriv STOP for at afbryde): ");
+        input = in.nextLine();
+        if(input.strip() == "STOP"){
+            return;
+        }
+        String cpr = input;
+
+
     }
 
     void listUsers2(){
@@ -111,7 +141,6 @@ public class CLI{
     String promptInput(){
         return "Indtast valgmulighed: ";
     }
-
     int getInput(List<Integer> validChoices){
         int choice = -1;
         try{
