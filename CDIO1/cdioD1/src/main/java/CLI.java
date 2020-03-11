@@ -18,14 +18,14 @@ public class CLI{
 
     // Starts the commandline program
     void run(){
-        System.out.println(screen0Mainmenu());
+        mainMenu0();
     }
 
     void mainMenu0(){
         int input = -1;
         while(input == -1){
             System.out.println(screen0Mainmenu());
-            promptInput();
+            System.out.println(promptInput());
             input = getInput(Arrays.asList(1,2,3,4,5));
             if(input == -1){
                 System.out.println("Ikke korrekt input, prøv igen.");

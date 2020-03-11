@@ -4,7 +4,7 @@ import java.util.List;
 
 import dto.UserDTO;
 
-public class UserDAONonPersistent implements IUserDAO
+public class UserDAONonPersistent implements dal.IUserDAO
 {
     public List<UserDTO> users;
 
