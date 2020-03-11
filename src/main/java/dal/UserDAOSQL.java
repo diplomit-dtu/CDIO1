@@ -81,25 +81,18 @@ public class UserDAOSQL implements IUserDAO{
         ArrayList<UserDTO> list = new ArrayList<>();
         try {
             ResultSet resultSet = _statement.executeQuery("SELECT * FROM Users");
-            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-
             while (resultSet.next()) {
                 list.add(new UserDTO());
-                try {
-                    list.get(list.size()-1).setUserId(Integer.parseInt(resultSetMetaData.getColumnName(0)));
-                } catch (Exception ignored){}
-                list.get(list.size()-1).setUserName(resultSetMetaData.getColumnName(1));
-                list.get(list.size()-1).setIni(resultSetMetaData.getColumnName(2));
-                list.get(list.size()-1).setUserCpr(resultSetMetaData.getColumnName(3));
-                list.get(list.size()-1).setPassword(resultSetMetaData.getColumnName(4));
+                list.get(list.size() - 1).setUserId(resultSet.getInt("UserID"));
+                list.get(list.size() - 1).setUserName(resultSet.getString("UserName"));
+                list.get(list.size() - 1).setIni(resultSet.getString("Ini"));
+                list.get(list.size() - 1).setUserCpr(resultSet.getString("cpr"));
+                list.get(list.size() - 1).setPassword(resultSet.getString("Password"));
+                list.get(list.size()-1).addRole(resultSet.getString("Roles"));
             }
-
         } catch (SQLException e){
             throw new DALException("Could not get user list");
         }
-
-
-
         closeConnection();
         return list;
     }
