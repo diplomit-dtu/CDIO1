@@ -7,7 +7,13 @@ import java.util.List;
 public class Func implements IFunc {
     @Override
     public UserDTO createUser(int userID, String userName, String cpr, String password, List<String> roles) {
-        return null;
+        UserDTO user = new UserDTO();
+        user.setUserId(userID);
+        user.setUserName(userName);
+        user.setUserCpr(cpr);
+        user.setPassword(password);
+        user.setRoles(roles);
+        return user;
     }
 
     @Override
