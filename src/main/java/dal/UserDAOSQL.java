@@ -1,13 +1,17 @@
 package dal;
 
 import dto.UserDTO;
+import org.apache.ibatis.jdbc.ScriptRunner;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
-public class UserDAOSQL implements IUserDAO{
+public class UserDAOSQL implements IUserDAO {
     //Private final attributes
     private final String _DRIVER = "com.mysql.cj.jdbc.Driver";
     private final String _END = "?characterEncoding=latin1&serverTimezone=UTC";
@@ -18,18 +22,22 @@ public class UserDAOSQL implements IUserDAO{
     private Statement _statement;
 
     //Optional
-    private String _username = "SilasRindorf";
-    private String _password = "trappeSumpTun";
+    private String _username = "admin";
+    private String _password = "password";
 
     /**
      * Uses a database to
-     * @param host Address of the host
-     * @param port Port of the SQL database
+     *
+     * @param host     Address of the host
+     * @param port     Port of the SQL database
      * @param database Name of database
      */
-    public UserDAOSQL(String host, String port, String database){
+    public UserDAOSQL(String host, String port, String database, String username, String password) {
         this._url = "jdbc:mysql://" + host + ":" + port + "/" + database + _END;
+        this._username = username;
+        this._password = password;
     }
+
     private void openConnection() throws DALException {
         try {
             Class.forName(_DRIVER);
@@ -38,17 +46,59 @@ public class UserDAOSQL implements IUserDAO{
         }
 
         try {
-            _connection = DriverManager.getConnection(_url,_username,_password);
+            _connection = DriverManager.getConnection(_url, _username, _password);
             _statement = _connection.createStatement();
         } catch (SQLException e) {
-            throw new DALException("Cannot connect to database");
+            createDummyDatabase();
+            throw new DALException("Cannot connect to database, creating new database");
         }
     }
+
+    private void createDummyDatabase() throws DALException {
+        System.out.println("Creating dummy database");
+
+        try {
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+        } catch (SQLException e) {
+            throw new DALException("could not create driver");
+        }
+
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://localhost/" + _END;
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(mysqlUrl,_username,_password);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new DALException("Could not create connection");
+        }
+        System.out.println("Connection established......");
+        //Initialize the script runner
+        ScriptRunner sr = new ScriptRunner(con);
+        //Creating a reader object
+        URL res = getClass().getClassLoader().getResource("User_Database.sql");
+        File file = null;
+        try {
+            file = Paths.get(res.toURI()).toFile();
+        } catch (URISyntaxException e) {
+            throw new DALException("URI invalid");
+        }
+        String absolutePath = file.getAbsolutePath();
+        Reader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(absolutePath));
+        } catch (FileNotFoundException ex) {
+            throw new DALException("could not create reader");
+        }
+        //Running the script
+            sr.runScript(reader);
+    }
+
     private void closeConnection() throws DALException {
         try {
             _statement.close();
             _connection.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new DALException("Cannot close connection to database");
         }
     }
@@ -59,7 +109,7 @@ public class UserDAOSQL implements IUserDAO{
         UserDTO user = new UserDTO();
         try {
             PreparedStatement ps = _connection.prepareStatement("SELECT * FROM Users WHERE UserID=?");
-            ps.setInt(1,userID);
+            ps.setInt(1, userID);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 user.setUserId(resultSet.getInt("UserID"));
@@ -69,7 +119,7 @@ public class UserDAOSQL implements IUserDAO{
                 user.setPassword(resultSet.getString("Password"));
                 user.addRole(resultSet.getString("Roles"));
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new DALException("Cannot get user");
         }
@@ -93,7 +143,7 @@ public class UserDAOSQL implements IUserDAO{
                 list.get(list.size() - 1).setPassword(resultSet.getString("Password"));
                 list.get(list.size() - 1).addRole(resultSet.getString("Roles"));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new DALException("Could not get user list");
         }
         closeConnection();
@@ -104,15 +154,17 @@ public class UserDAOSQL implements IUserDAO{
     public void createUser(UserDTO user) throws DALException {
         openConnection();
         try {
-            PreparedStatement ps = _connection.prepareStatement("INSERT INTO users(UserID,UserName,Ini,cpr,Password,Roles) VALUES (?,?,?,?,?,?)");
-            ps.setInt(1,user.getUserId());
-            ps.setString(2,user.getUserName());
-            ps.setString(3,user.getIni());
-            ps.setString(4,user.getCpr());
-            ps.setString(5,user.getPassword());
-            ps.setString(6,user.getRoles().get(0));
+            PreparedStatement ps =
+                    _connection.prepareStatement(
+                            "INSERT INTO users(UserID,UserName,Ini,cpr,Password,Roles) VALUES (?,?,?,?,?,?)");
+            ps.setInt(1, user.getUserId());
+            ps.setString(2, user.getUserName());
+            ps.setString(3, user.getIni());
+            ps.setString(4, user.getCpr());
+            ps.setString(5, user.getPassword());
+            ps.setString(6, user.getRoles().get(0));
             ps.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new DALException("Cannot create new user. Check for unique ID");
         }
 
