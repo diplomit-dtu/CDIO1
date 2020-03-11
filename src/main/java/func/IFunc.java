@@ -7,7 +7,7 @@ import java.util.List;
 public interface IFunc{
     // This method will generate the initials and password based on the given data. Returns a deep-copy of the resulting user.
     //TODO: Remove password here, as it is generated, make proper password generation
-    UserDTO createUser(int userID, String userName, String cpr, List<String> roles) throws UserFormatException;
+    UserDTO createUser(int userID, String userName, String cpr, List<String> roles) throws UserFormatException, DatabaseException;
     // Returns a deep-copy of the list of users, as to not being able to modify it.
     List<UserDTO> getUserList() throws IUserDAO.DALException;
     // Returns a deep-copy of the user with the specific id.
@@ -27,6 +27,11 @@ public interface IFunc{
             CPR,
             roles,
             password
+        }
+    }
+    public static class DatabaseException extends Exception{
+        DatabaseException(String message){
+            super(message);
         }
     }
 }
