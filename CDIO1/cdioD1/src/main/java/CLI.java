@@ -1,3 +1,5 @@
+import dal.IUserDAO;
+import dto.UserDTO;
 import func.IFunc;
 
 import java.util.Arrays;
@@ -38,7 +40,11 @@ public class CLI{
             }
         }
         if(input == 1){
-            createUser1();
+            try {
+                createUser1();
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }else if(input == 2){
             listUsers2();
         }else if(input == 3){
@@ -66,8 +72,10 @@ public class CLI{
         return acc.toString();
     }
 
-    void createUser1(){
-
+    void createUser1() throws IUserDAO.DALException {
+        UserDTO user = func.getUser(13);
+        System.out.println(
+        userStrFormat(user));
     }
 
     void listUsers2(){
@@ -80,6 +88,24 @@ public class CLI{
 
     void deleteUser4(){
 
+    }
+    String userStrFormat(UserDTO user){
+        StringBuilder acc = new StringBuilder();
+        acc.append("Unikt ID: " + user.getUserId() + "\n");
+        acc.append("Brugernavn: " + user.getUserName() + "\n");
+        acc.append("Initialer: " + user.getIni() + "\n");
+        acc.append("CPR: " + user.getUserCpr() + "\n");
+        acc.append("Kodeord: " + user.getPassword() + "\n");
+        acc.append("Roller: ");
+
+        for(int i = 0; i<user.getRoles().size(); ++i){
+            if ( i == 0){
+                acc.append(user.getRoles().get(i));
+            }else{
+                acc.append(" og " +user.getRoles().get(i));
+            }
+        }
+        return acc.toString();
     }
 
     String promptInput(){
