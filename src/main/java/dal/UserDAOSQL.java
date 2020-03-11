@@ -21,8 +21,8 @@ public class UserDAOSQL implements IUserDAO{
     private Statement _statement;
 
     //Optional
-    private String _username = "SilasRindorf";
-    private String _password = "trappeSumpTun";
+    private String _username = "admin";
+    private String _password = "password";
 
     /**
      * Uses a database to
@@ -30,8 +30,10 @@ public class UserDAOSQL implements IUserDAO{
      * @param port Port of the SQL database
      * @param database Name of database
      */
-    public UserDAOSQL(String host, String port, String database){
+    public UserDAOSQL(String host, String port, String database,String username, String password){
         this._url = "jdbc:mysql://" + host + ":" + port + "/" + database + _END;
+        this._username = username;
+        this._password = password;
     }
     private void openConnection() throws DALException {
         try {

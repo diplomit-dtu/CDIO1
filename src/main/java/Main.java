@@ -1,7 +1,6 @@
 import dal.IUserDAO;
 import dal.UserDAONonPersistent;
-import dal.UserDAOSQL;
-import dto.UserDTO;
+
 import func.Func;
 import func.IFunc;
 
