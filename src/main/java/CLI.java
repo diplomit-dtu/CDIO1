@@ -84,8 +84,8 @@ public class CLI{
 
         System.out.println("Indtast unikt ID (11-99) (skriv STOP for at afbryde): ");
         while(id == -1){
-            input = in.nextLine();
-            if(input.strip() == "STOP"){
+            input = in.nextLine().trim();
+            if(input.equals("STOP")){
                 return;
             }
             try{
@@ -98,15 +98,15 @@ public class CLI{
 
 
         System.out.println("Indtast brugernavn (skriv STOP for at afbryde): ");
-        input = in.nextLine();
-        if(input.strip() == "STOP"){
+        input = in.nextLine().trim();
+        if(input.equals("STOP")){
             return;
         }
         String userName = input;
 
         System.out.println("Indtast CPR (skriv STOP for at afbryde): ");
-        input = in.nextLine();
-        if(input.strip() == "STOP"){
+        input = in.nextLine().trim();
+        if(input.equals("STOP")){
             return;
         }
         String cpr = input;
