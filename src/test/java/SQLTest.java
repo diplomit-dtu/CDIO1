@@ -87,7 +87,7 @@ public class SQLTest{
     public void testGetUserList() throws IUserDAO.DALException {
         IUserDAO iUserDAO = new UserDAOSQL("localhost","3306","user_database",username,password);
         try {
-            UserDTO user1 = new UserDTO(20, "Name", "Na", "123456-1234", "password", "Admin");
+            UserDTO user1 = new UserDTO(20, "Name", "Na", "123456-1234", "password", "1");
             iUserDAO.createUser(user1);
         } catch (IUserDAO.DALException ignored){
 
