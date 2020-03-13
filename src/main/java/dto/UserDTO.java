@@ -2,17 +2,34 @@ package dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserDTO implements Serializable{
 
   private static final long serialVersionUID = 4545864587995944260L;
   private int	userId;
-  private String userName;
-  private String ini;
-  private List<String> roles;
-  private String cpr;
-  private String password;
+  private String userName = "null";
+  private String ini = "null";
+  private List<String> roles = new ArrayList<>(Arrays.asList("null"));
+  private String cpr = "null";
+  private String password = "null";
+
+
+  public UserDTO() {
+    this.roles = new ArrayList<>();
+  }
+
+  public UserDTO(int userId, String userName, String ini, String CPR, String password, String role){
+    this.roles = new ArrayList<>();
+    this.userId = userId;
+    this.userName = userName;
+    this.ini = ini;
+    this.cpr = CPR;
+    this.password = password;
+    roles.add(role);
+
+  }
 
   public String getCpr() {
     return cpr;
@@ -21,9 +38,6 @@ public class UserDTO implements Serializable{
   public String getPassword() {
     return password;
   }
-
-  public UserDTO() {
-    this.roles = new ArrayList<>(); }
 
   public void setUserCpr(String Cpr){ this.cpr = Cpr;}
   public String getUserCpr(){return cpr;}

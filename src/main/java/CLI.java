@@ -1,4 +1,5 @@
 import dal.IUserDAO;
+//import dal.UserDAOSQL;
 import dto.UserDTO;
 import func.IFunc;
 
@@ -16,11 +17,15 @@ public class CLI{
     }
 
     // Starts the commandline program
-    void run(){
+    void run() throws InterruptedException{
         mainMenu0();
     }
 
-    void mainMenu0(){
+    /**
+     * Start screen, main menu.
+     * @throws InterruptedException
+     */
+    void mainMenu0() throws InterruptedException{
         int input = -1;
         while(input == -1){
             System.out.println(screen0Mainmenu());
@@ -37,32 +42,16 @@ public class CLI{
             }
         }
         if(input == 1){
-            try {
-                createUser1();
-            }catch(Exception e){
-                System.out.println(e);
-            }
+            createUser1();
         }else if(input == 2){
             listUsers2();
         }else if(input == 3){
-            try {
-                updateUser3();
-            } catch (IUserDAO.DALException e) {
-                e.printStackTrace();
-            }
+            updateUser3();
         }else if(input == 4){
-            try {
-                deleteUser4();
-            } catch (IUserDAO.DALException e) {
-                e.printStackTrace();
-            }
+            deleteUser4();
         }else if(input == 5){
             System.out.println("Lukker ned...");
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            }catch(InterruptedException e){
-                System.out.println(e);
-            }
+            TimeUnit.SECONDS.sleep(1);
             return;
         }
         mainMenu0();
@@ -78,7 +67,11 @@ public class CLI{
         return acc.toString();
     }
 
-    void createUser1() throws IUserDAO.DALException {
+    /**
+     * Option 1 from mainmenu: create user
+     * @throws InterruptedException
+     */
+    void createUser1() throws InterruptedException {
         int id = -1;
         String input;
 
@@ -124,7 +117,6 @@ public class CLI{
             System.out.println("3) Formand " + " " +  isSelected(formand));
             System.out.println("4) Operatør" + " " +  isSelected(operator));
             System.out.println("5) Gem rolletildeling og opret bruger");
-            input = in.nextLine();
             choice = getInput(Arrays.asList(1,2,3,4,5));
             if(choice == -1){
                 System.out.println("Ikke korrekt input, prøv igen: ");
@@ -156,8 +148,26 @@ public class CLI{
         try {
             func.createUser(id, userName, cpr, roles);
         }catch(IFunc.UserFormatException e){
-            //TODO:make more neat
-            System.out.println("WRONG!!!!");
+            System.out.println("En eller flere parametre er ukorrekt formateret:");
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.CPR)){
+                System.out.println("- CPR er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.ID)){
+                System.out.println("- ID er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.roles)){
+                System.out.println("- Rolleangivelse er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.username)){
+                System.out.println("- Brugernavn er ukorrekt formateret");
+            }
+            if(e.errorlist.contains(IFunc.UserFormatException.errortypes.password)){
+                System.out.println("- Kodeord er ukorrekt formateret");
+            }
+            TimeUnit.SECONDS.sleep(2);
+        }catch(IFunc.DatabaseException e){
+            System.out.println("Enten er der ikke en database, eller brugeren er identisk med et andet element i databasen. Prøv igen");
+            TimeUnit.SECONDS.sleep(1);
         }
 
     }
@@ -166,22 +176,138 @@ public class CLI{
         if(b){
             return "✓";
         }else{
-            return "\uD83D\uDDF4";
+            return "x";
         }
     }
 
 
-    void listUsers2(){
+    //Prints table along the lines of:
+    //+-------+------+------+
+    //| att1  | att2 | att3 |
+    //+-------+------+------+
 
+    /**
+     * Option 2 from main menu: List users
+     */
+    void listUsers2(){
+        printTable(Arrays.asList("ID", "Username","Initials","CPR", "Kodeord"), getUserRows());
     }
 
-    void updateUser3() throws IUserDAO.DALException {
+    /**
+     * Given attributes, and subsequent tubles (rows) it will print a SQL-like table
+     * @param attributes
+     * @param rows
+     */
+    void printTable(List<String> attributes, List<List<String>> rows){
+        if (attributes.size() == rows.get(0).size()){
+            throw new AssertionError("The number of attributes should always be equal to the row size");
+        }
+        List<Integer> attWidth = new ArrayList<>();
+        for(int i = 0; i<attributes.size(); ++i){
+            attWidth.add(attributes.get(i).length());
+        }
+        for(int r = 0; r<rows.size();++r){
+            for(int elem = 0; elem<attWidth.size(); ++elem){
+                if(attWidth.get(elem)<rows.get(r).get(elem).length()){
+                    attWidth.set(elem, rows.get(r).get(elem).length());
+                }
+            }
+        }
+        StringBuilder firstLine = new StringBuilder();
+        firstLine.append("+");
+        for(int i = 0; i<attWidth.size(); ++i){
+            StringBuilder tmp = new StringBuilder();
+            for(int k = 0; k<attWidth.get(i)+2; k++){
+                tmp.append("-");
+            }
+            firstLine.append(tmp);
+            firstLine.append("+");
+        }
+        String seperator = firstLine.toString();
+
+        StringBuilder attBuilder = new StringBuilder();
+        attBuilder.append("| ");
+        for(int i = 0; i<attributes.size(); ++i){
+            StringBuilder spaces = new StringBuilder();
+            for(int k = 0; k<attWidth.get(i)-attributes.get(i).length(); k++){
+                spaces.append(" ");
+            }
+            attBuilder.append(attributes.get(i) + spaces + " | ");
+        }
+
+        System.out.println(seperator);
+        System.out.println(attBuilder.toString());
+        System.out.println(seperator);
+
+        for (int i = 0; i < rows.size(); ++i) {
+            StringBuilder rowBuilder = new StringBuilder();
+            rowBuilder.append("| ");
+            for(int att = 0; att<attributes.size(); ++att) {
+                StringBuilder spaces = new StringBuilder();
+                for (int k = 0; k < attWidth.get(att)-rows.get(i).get(att).length(); k++) {
+                    spaces.append(" ");
+                }
+                rowBuilder.append(rows.get(i).get(att) + spaces + " | ");
+            }
+            System.out.println(rowBuilder.toString());
+            System.out.println(seperator);
+        }
+    }
+
+    List<List<String>> getUserRows(){
+        List<UserDTO> list = new ArrayList<>();
+        try {
+            list = func.getUserList();
+        }catch(IFunc.DatabaseException e){
+            //TODO: better message
+            System.out.println(e.getMessage());
+        }
+        List<List<String>> rows = new ArrayList<>();
+        for(int i = 0; i<list.size(); ++i){
+            List<String> tmp = new ArrayList<>();
+            tmp.add(new Integer(list.get(i).getUserId()).toString());
+            tmp.add(list.get(i).getUserName());
+            tmp.add(list.get(i).getIni());
+            tmp.add(list.get(i).getCpr());
+            tmp.add(list.get(i).getPassword());
+            StringBuilder acc = new StringBuilder();
+            for(int j = 0; j<list.get(i).getRoles().size();++j){
+                if(j==0){
+                    acc.append(list.get(i).getRoles().get(j));
+                }else{
+                    acc.append(" og "+list.get(i).getRoles().get(j));
+                }
+            }
+            tmp.add(acc.toString());
+            rows.add(tmp);
+        }
+        return rows;
+    }
+
+
+    //TODO: This needs to be redone so that it actually follows our requirements given on the website Alexander.
+    // This includes bringing it back to the Update page when a setting has been made,
+    // and _not_ bring it to main menu. See createUser
+    // It also needs to follow the correct output format.
+    // It needs an "save and exit to main menu" button
+    // Sincerely Christoffer
+
+    /**
+     * Option 3 from main menu
+     */
+    void updateUser3() {
         String useless;
         System.out.println("Indtast user ID, som skal Updateres: ");
         int startID = in.nextInt();
         useless = in.nextLine();
-        UserDTO user = func.getUser(startID);
-        System.out.println("Hvilken værdie vil du ændre: ");
+        UserDTO user = null;
+        try {
+            user = func.getUser(startID);
+        }catch (IFunc.DatabaseException e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("Hvilken værdi vil du ændre: ");
         System.out.println("1) ID");
         System.out.println("2) Navn");
         System.out.println("3) Cpr") ;
@@ -193,7 +319,7 @@ public class CLI{
             case 1:
                 System.out.println("Indtast nyt ID:");
                 user.setUserId(in.nextInt());
-                useless = in.nextLine();
+                in.nextLine();
                 break;
             case 2:
                 System.out.println("Indtast nyt navn:");
@@ -229,22 +355,38 @@ public class CLI{
             default:
                 System.out.println("Fejl i Switch");
         }
-        func.deleteUser(startID);
+        try {
+            func.deleteUser(startID);
+        }catch(IFunc.DatabaseException e){
+            System.out.println(e.getMessage());
+        }
+
         try {
             func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getRoles());
         }catch(IFunc.UserFormatException e){
             //TODO: Make better
             System.out.println("WRONG!!!");
 
+        }catch(IFunc.DatabaseException e){
+            System.out.println("Wrong");
         }
 
     }
 
-    void deleteUser4() throws IUserDAO.DALException {
+    //TODO: this needs to follow the website as well Alexander, more specifically to print the user in the
+    // correct format as specificed by the website, see userStrFormat method
+    // Sincerely Christoffer
+
+    /**
+     * Option 4 from main menu.
+     */
+    void deleteUser4() {
         System.out.println("Indtast user ID, som skal slettes: ");
-        System.out.println("User: " + func.deleteUser(in.nextInt()) + " er slettet" );
-
-
+        try {
+            System.out.println("User: " + func.deleteUser(in.nextInt()) + " er slettet");
+        }catch(IFunc.DatabaseException e){
+            System.out.println(e.getMessage());
+        }
     }
     String userStrFormat(UserDTO user){
         StringBuilder acc = new StringBuilder();
@@ -268,11 +410,18 @@ public class CLI{
     String promptInput(){
         return "Indtast valgmulighed: ";
     }
+
+    /**
+     * Takes a list of valid choice, and will return -1 if
+     * the user does not enter either a valid option or something that is not string-formatted
+     * @param validChoices
+     * @return
+     */
     int getInput(List<Integer> validChoices){
         int choice = -1;
         try{
-            choice = in.nextInt();
-        }catch(InputMismatchException e){
+            choice = Integer.parseInt(in.nextLine());
+        }catch(NumberFormatException e){
             return -1;
         }
 
@@ -281,6 +430,8 @@ public class CLI{
         }
         return choice;
     }
+
+
     String getSInput(List<String> validChoices){
         String choice = "";
         choice = in.nextLine();
