@@ -38,6 +38,10 @@ public class UserDAOSQL implements IUserDAO {
         this._password = password;
     }
 
+    /**
+     * private function for opening a connection to the server
+     * @throws DALException Throws a DALException if: Class.for(driver) fails
+     */
     private void openConnection() throws DALException {
         try {
             Class.forName(_DRIVER);
@@ -53,6 +57,10 @@ public class UserDAOSQL implements IUserDAO {
         }
     }
 
+    /**
+     * If there is no database create a dummy database. Purely for showing a database working
+     * @throws DALException Throws DALException
+     */
     private void createDummyDatabase() throws DALException {
         System.out.println("Creating dummy database");
 
