@@ -75,14 +75,14 @@ public class UserDAOSQL implements IUserDAO {
         ScriptRunner sr = new ScriptRunner(_connection);
         //Creating a reader object
         URL res = getClass().getClassLoader().getResource("User_Database2.sql");
-        File file = null;
+        File file;
         try {
             file = Paths.get(res.toURI()).toFile();
         } catch (URISyntaxException e) {
             throw new DALException("URI invalid");
         }
         String absolutePath = file.getAbsolutePath();
-        Reader reader = null;
+        Reader reader;
         try {
             reader = new BufferedReader(new FileReader(absolutePath));
         } catch (FileNotFoundException ex) {
@@ -92,7 +92,7 @@ public class UserDAOSQL implements IUserDAO {
         sr.runScript(reader);
         _url = "jdbc:mysql://localhost:3306/User_Database2" + _END;
         try{
-            UserDTO user1 = new UserDTO(0,"Admin","A","0123456789","password","Admin");
+            UserDTO user1 = new UserDTO(0,"Admin","Ad","0123456789","password","1");
             createUser(user1);
         } catch (Exception ignored){}
         try {
