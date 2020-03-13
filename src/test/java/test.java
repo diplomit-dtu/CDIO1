@@ -5,7 +5,7 @@ public class test {
     @Test
     public void testAll(){
         NonPersistentTest nonPersistentTest = new NonPersistentTest();
-        SQLTest sqlTest = new SQLTest("username","password");
+        SQLTest sqlTest = new SQLTest("root","trappeSumpTun");
     }
 
 }

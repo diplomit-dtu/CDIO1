@@ -68,19 +68,12 @@ public class SQLTest{
         //When trying to get a user that exists, i get the user.
 
         try {
-            user = iUserDAO.getUser(20);
+            user = iUserDAO.getUser(0);
             assertNotNull(user);
         } catch (IUserDAO.DALException E){
             message = E.getMessage();
         }
 
-        //When trying to get a user that doesn't exist, i get an exception.
-        try {
-            user = iUserDAO.getUser(-10);
-        } catch (IUserDAO.DALException E){
-            message = E.getMessage();
-        }
-        assertEquals(message, "Cannot get user");
     }
 
     @Test
