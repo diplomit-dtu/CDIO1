@@ -38,6 +38,10 @@ public class UserDAOSQL implements IUserDAO {
         this._password = password;
     }
 
+    /**
+     * private function for opening a connection to the server
+     * @throws DALException Throws a DALException if: Class.for(driver) fails
+     */
     private void openConnection() throws DALException {
         try {
             Class.forName(_DRIVER);
@@ -53,6 +57,10 @@ public class UserDAOSQL implements IUserDAO {
         }
     }
 
+    /**
+     * If there is no database create a dummy database. Purely for showing a database working
+     * @throws DALException Throws DALException
+     */
     private void createDummyDatabase() throws DALException {
         System.out.println("Creating dummy database");
 
@@ -90,7 +98,7 @@ public class UserDAOSQL implements IUserDAO {
         }
         //Running the script
         sr.runScript(reader);
-        _url = "jdbc:mysql://localhost:3306/User_Database2" + _END;
+        _url = "jdbc:mysql://localhost:3306/User_Database" + _END;
         try{
             UserDTO user1 = new UserDTO(0,"Admin","Ad","0123456789","password","1");
             createUser(user1);
@@ -171,10 +179,6 @@ public class UserDAOSQL implements IUserDAO {
             ps.setString(4, user.getCpr());
             ps.setString(5, user.getPassword());
             try {
-                for (String s :
-                        user.getRoles()) {
-                    System.out.println(s);
-                }
                 ps.setString(6, user.getRoles().get(0));
             } catch (IndexOutOfBoundsException e){
                 ps.setString(6,null);
