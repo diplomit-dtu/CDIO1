@@ -335,7 +335,7 @@ public class CLI{
                 break;
             case 5:
                 while(true) {
-                    ArrayList<String> userRoles = new ArrayList<String>();
+                    ArrayList<String> userRoles = new ArrayList<>();
                     System.out.println("Indtast ny role eller exit");
                     System.out.println("Roles kan være: Admin, Pharmacist, Foreman, Operator, exit");
                     String sChoice = getSInput(Arrays.asList("Admin", "Pharmacist", "Foreman", "Operator", "exit"));
@@ -385,6 +385,7 @@ public class CLI{
         try {
             System.out.println("User: " + func.deleteUser(in.nextInt()) + " er slettet");
         }catch(IFunc.DatabaseException e){
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }

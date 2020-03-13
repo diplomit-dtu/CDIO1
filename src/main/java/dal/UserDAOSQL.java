@@ -125,7 +125,7 @@ public class UserDAOSQL implements IUserDAO {
                 user.setIni(resultSet.getString("Ini"));
                 user.setUserCpr(resultSet.getString("cpr"));
                 user.setPassword(resultSet.getString("Password"));
-                user.addRole(resultSet.getString("Roles"));
+                user.addRole(resultSet.getString("Role"));
             }
         } catch (Exception e) {
             throw new DALException("Cannot get user");
@@ -151,7 +151,6 @@ public class UserDAOSQL implements IUserDAO {
                 list.get(list.size() - 1).addRole(resultSet.getString("Role"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DALException("Could not get user list");
         }
         closeConnection();
@@ -177,7 +176,6 @@ public class UserDAOSQL implements IUserDAO {
             }
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DALException("Cannot create new user. Check for unique ID");
         }
 
@@ -204,6 +202,7 @@ public class UserDAOSQL implements IUserDAO {
             statement.executeUpdate();
             System.out.println("User is gone");
         } catch (SQLException e) {
+            e.printStackTrace();
            throw new DALException("Cant delete user with ID = " + userId + ", Check ID");
         }
         closeConnection();
