@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `UserID` INT NOT NULL,
   `Username` VARCHAR(20) NULL,
   `Ini` VARCHAR(4) NULL,
-  `CPR` VARCHAR(10) NULL,
+  `CPR` VARCHAR(11) NULL,
   `Password` VARCHAR(100) NULL,
-  `Role` ENUM('Admin', 'Pharmacist', 'Foreman', 'Operator') NULL,
+  `Role` ENUM('Administratør', 'Farmaceut', 'Formand', 'Operatør') NULL,
   PRIMARY KEY (`UserID`));
 
 SET SQL_MODE=@OLD_SQL_MODE;

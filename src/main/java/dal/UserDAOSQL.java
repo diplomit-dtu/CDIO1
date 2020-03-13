@@ -95,6 +95,11 @@ public class UserDAOSQL implements IUserDAO {
             UserDTO user1 = new UserDTO(0,"Admin","A","0123456789","password","Admin");
             createUser(user1);
         } catch (Exception ignored){}
+        try {
+            openConnection();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void closeConnection() throws DALException {
@@ -166,12 +171,17 @@ public class UserDAOSQL implements IUserDAO {
             ps.setString(4, user.getCpr());
             ps.setString(5, user.getPassword());
             try {
+                for (String s :
+                        user.getRoles()) {
+                    System.out.println(s);
+                }
                 ps.setString(6, user.getRoles().get(0));
             } catch (IndexOutOfBoundsException e){
                 ps.setString(6,null);
             }
             ps.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DALException("Cannot create new user. Check for unique ID");
         }
 
