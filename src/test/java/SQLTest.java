@@ -2,6 +2,8 @@ import dal.*;
 import dto.UserDTO;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -96,7 +98,35 @@ public class SQLTest{
         assertEquals(20, users.get(2).getUserId());
     }
 
+    @Test
     public void testUpdateUser(){
+        IUserDAO UserDAO = new UserDAOSQL("localhost","3306","user_database",username,password);
+
+        try {
+            UserDTO  user1 = new UserDTO(20, "Test1", "TeTe", "123456-1234", "password", "1");
+            UserDAO.createUser(user1);
+
+            int ID = user1.getUserId();
+            String newName = "new";
+            String newInIn = "Ne";
+            String newCPR = "242424-2424";
+            String newPassword = "he3_A";
+            String newRole = "2";
+            List<String> roles = new ArrayList<>();
+            roles.add(newRole);
+            UserDTO changeTo = new UserDTO(ID,newName,newInIn,newCPR,newPassword,newRole);
+            UserDAO.updateUser(changeTo);
+            user1 = UserDAO.getUser(ID);
+            assertEquals(newName, user1.getUserName());
+            assertEquals(newInIn, user1.getIni());
+            assertEquals(newCPR, user1.getCpr());
+            assertEquals(newPassword, user1.getPassword());
+           assertEquals(roles, user1.getRoles());
+
+        } catch (IUserDAO.DALException ignored){
+
+        }
+
 
     }
 
