@@ -173,8 +173,7 @@ public class CLI{
     }
 
 
-    //TODO: Not done yet! Sincerely Christoffer
-    // ListUsers2 should use printTable and getUserRows in order to make the proper rows of the format:
+    //Prints table along the lines of:
     //+-------+------+------+
     //| att1  | att2 | att3 |
     //+-------+------+------+
