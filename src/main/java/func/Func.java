@@ -31,11 +31,8 @@ public class Func implements IFunc {
         String hyphen = "";
         try{
             int test = Integer.parseInt(cpr.substring(0,6));
-            System.out.println(test);
             test = Integer.parseInt(cpr.substring(7,11));
-            System.out.println(test);
             hyphen = cpr.substring(6,7);
-            System.out.println(hyphen);
         }catch(NumberFormatException | StringIndexOutOfBoundsException e){
             isInteger=false;
             hyphen = "";
