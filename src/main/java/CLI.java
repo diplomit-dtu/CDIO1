@@ -189,7 +189,6 @@ public class CLI{
             attWidth.add(attributes.get(i).length());
         }
         for(int r = 0; r<rows.size();++r){
-            System.out.println(rows.get(r).toString());
             for(int elem = 0; elem<attWidth.size(); ++elem){
                 if(attWidth.get(elem)<rows.get(r).get(elem).length()){
                     attWidth.set(elem, rows.get(r).get(elem).length());
