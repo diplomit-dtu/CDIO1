@@ -297,82 +297,136 @@ public class CLI{
      */
     void updateUser3() {
         String useless;
-        System.out.println("Indtast user ID, som skal Updateres: ");
+        System.out.println("Indtast unikt id for bruger: ");
         int startID = in.nextInt();
         useless = in.nextLine();
+
         UserDTO user = null;
         try {
-            user = func.getUser(startID);
-        }catch (IFunc.DatabaseException e){
-            System.out.println(e.getMessage());
+            user = user = func.getUser(startID);
+        } catch (IFunc.DatabaseException e) {
+            System.out.println("User findes ikke i databasen");
+            e.printStackTrace();
         }
+        try {
 
-        System.out.println("Hvilken værdi vil du ændre: ");
-        System.out.println("1) ID");
-        System.out.println("2) Navn");
-        System.out.println("3) Cpr") ;
-        System.out.println("4) Password");
-        System.out.println("5) Role");
-        int choice = getInput(Arrays.asList(1, 2, 3, 4, 5));
+            //System.out.println("== Bruger med ændringer ==");
+            String name = user.getUserName();
+            String ini = user.getIni();
+            String cpr = user.getCpr();
+            String pass = user.getPassword();
 
-        switch (choice){
-            case 1:
-                System.out.println("Indtast nyt ID:");
-                user.setUserId(in.nextInt());
-                in.nextLine();
-                break;
-            case 2:
-                System.out.println("Indtast nyt navn:");
-                user.setUserName(in.nextLine());
-                break;
-            case 3:
-                System.out.println("Indtast nyt cpr: ");
-                user.setUserCpr(in.nextLine());
-                break;
-            case 4:
-                System.out.println("Indtast nyt Password: ");
-                user.setPassword(in.nextLine());
-                break;
-            case 5:
-                while(true) {
-                    ArrayList<String> userRoles = new ArrayList<>();
-                    System.out.println("Indtast ny role eller exit");
-                    System.out.println("Roles kan være: Admin, Pharmacist, Foreman, Operator, exit");
-                    String sChoice = getSInput(Arrays.asList("Admin", "Pharmacist", "Foreman", "Operator", "exit"));
+            System.out.println("Unikt ID: " + startID);
+            System.out.println("Brugernavn: " + name);
+            System.out.println("Initialer: " + ini);
+            System.out.println("CPR: " + cpr);
+            System.out.println("Kodeord: " + pass);
+            System.out.println("Roller: " + user.getRoles());
 
-                    if(!sChoice.equals("")){
-                        if(!(userRoles.contains(sChoice))){
-                            userRoles.add(sChoice);
+            int x = 0;
+            while(x != 6){
+                System.out.println("Hvilken værdi vil du ændre: ");
+                System.out.println("1) ID");
+                System.out.println("2) Navn");
+                System.out.println("3) Cpr");
+                System.out.println("4) Password");
+                System.out.println("5) Role");
+                System.out.println("6) Gem og afslut");
+                System.out.println("7) Afslut uden at gemme");
+                x = getInput(Arrays.asList(1, 2, 3, 4, 5, 6));
+            switch (x) {
+                case 1:
+                    System.out.println("Indtast nyt ID:");
+                    user.setUserId(in.nextInt());
+                    in.nextLine();
+                    break;
+                case 2:
+                    System.out.println("Indtast nyt navn:");
+                    user.setUserName(in.nextLine());
+                    break;
+                case 3:
+                    System.out.println("Indtast nyt cpr: ");
+                    user.setUserCpr(in.nextLine());
+                    break;
+                case 4:
+                    System.out.println("Indtast nyt Password: ");
+                    user.setPassword(in.nextLine());
+                    break;
+                case 5:
+
+                    int choice = -1;
+                    boolean admin = false;
+                    boolean farma = false;
+                    boolean formand = false;
+                    boolean operator = false;
+                    while (choice != 5) {
+                        choice = -1;
+                        System.out.println("1) Administratør" + " " + isSelected(admin));
+                        System.out.println("2) Farmaceut" + " " + isSelected(farma));
+                        System.out.println("3) Formand " + " " + isSelected(formand));
+                        System.out.println("4) Operatør" + " " + isSelected(operator));
+                        System.out.println("5) Gem rolletildeling og opret bruger");
+                        choice = getInput(Arrays.asList(1, 2, 3, 4, 5));
+                        if (choice == -1) {
+                            System.out.println("Ikke korrekt input, prøv igen: ");
+                            continue;
                         }
-                    }else if(sChoice.equals("exit")){
-                        if(!userRoles.isEmpty()){
-                            user.setRoles(userRoles);
+                        if (choice == 1) {
+                            admin = !admin;
+                        } else if (choice == 2) {
+                            farma = !farma;
+                        } else if (choice == 3) {
+                            formand = !formand;
+                        } else if (choice == 4) {
+                            operator = !operator;
                         }
-                        break;
                     }
+                    List<String> roles = new ArrayList<>();
+                    if (admin) {
+                        roles.add("Administrator");
+                    }
+                    if (farma) {
+                        roles.add("Farmaceut");
+                    }
+                    if (formand) {
+                        roles.add("Formand");
+                    }
+                    if (operator) {
+                        roles.add("Operatør");
+                    }
+                    user.setRoles(roles);
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    return;
+
+                default:
+                    System.out.println("Fejl i Switch");
+            }
+            }
+            System.out.println("Skriv JA (med stort) hvis du er sikker (alt andet vil afbryde handlingen): ");
+            if(in.nextLine().equals("JA")) {
+                try {
+                    func.deleteUser(startID);
+                } catch (IFunc.DatabaseException e) {
+                    System.out.println(e.getMessage());
                 }
-                break;
-            default:
-                System.out.println("Fejl i Switch");
-        }
-        try {
-            func.deleteUser(startID);
-        }catch(IFunc.DatabaseException e){
-            System.out.println(e.getMessage());
-        }
 
-        try {
-            func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getRoles());
-        }catch(IFunc.UserFormatException e){
-            //TODO: Make better
-            System.out.println("WRONG!!!");
+                try {
+                    func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getRoles());
+                } catch (IFunc.UserFormatException e) {
+                    //TODO: Make better
+                    System.out.println(e.getMessage());
 
-        }catch(IFunc.DatabaseException e){
-            System.out.println("Wrong");
+                } catch (IFunc.DatabaseException e) {
+                System.out.println(e.getMessage());
+            }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
-
     //TODO: this needs to follow the website as well Alexander, more specifically to print the user in the
     // correct format as specificed by the website, see userStrFormat method
     // Sincerely Christoffer

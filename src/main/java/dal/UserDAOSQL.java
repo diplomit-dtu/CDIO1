@@ -208,7 +208,7 @@ public class UserDAOSQL implements IUserDAO {
             PreparedStatement statement = _connection.prepareStatement("DELETE FROM users WHERE UserID =?");
             statement.setInt(1,userId);
             statement.executeUpdate();
-            System.out.println("User is gone");
+            
         } catch (SQLException e) {
             e.printStackTrace();
            throw new DALException("Cant delete user with ID = " + userId + ", Check ID");
