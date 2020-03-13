@@ -1,5 +1,10 @@
 package test;
 
+import dal.IUserDAO;
+import dal.UserDAONonPersistent;
+import dto.UserDTO;
+import org.junit.jupiter.api.Test;
+
 public class NonPersistentTest {
 
     public NonPersistentTest(){
@@ -12,12 +17,12 @@ public class NonPersistentTest {
         UserDAONonPersistent NonPersistent = new UserDAONonPersistent();
         String message = "";
         try{
-            UserDTO user1 = new UserDTO(int -1, String "Name", String "Na", String "123456-1234", String "password", String "Admin");
+            UserDTO user1 = new UserDTO(-1,  "Name",  "Na",  "123456-1234",  "password",  "Admin");
             NonPersistent.createUser(user1);
-        } catch (DALException E) {
+        } catch (IUserDAO.DALException E) {
             message = E.getMessage();
         }
-        assertTrue(message.equals("BrugerID skal være mellem 11 og 99 (inklusivt)"))
+        assert(message.equals("BrugerID skal være mellem 11 og 99 (inklusivt)"));
 
 
     }

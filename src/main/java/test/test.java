@@ -1,8 +1,6 @@
 package test;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-import java.dal.UserDAONonPersistent;
+
 
 public class test {
 
