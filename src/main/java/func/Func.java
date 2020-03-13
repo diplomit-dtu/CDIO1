@@ -3,6 +3,7 @@ package func;
 import dal.IUserDAO;
 import dto.UserDTO;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,20 +72,32 @@ public class Func implements IFunc {
     }
 
     @Override
-    public List<UserDTO> getUserList() throws IUserDAO.DALException {
-        return new ArrayList<>(dao.getUserList());
+    public List<UserDTO> getUserList() throws DatabaseException{
+        try {
+            return new ArrayList<>(dao.getUserList());
+        }catch (IUserDAO.DALException e){
+            throw new DatabaseException("Unable to get user list from database.");
+        }
     }
 
     @Override
-    public UserDTO getUser(int userID) throws IUserDAO.DALException {
-        return dao.getUser(userID);
+    public UserDTO getUser(int userID) throws DatabaseException {
+        try {
+            return dao.getUser(userID);
+        }catch (IUserDAO.DALException e){
+            throw new DatabaseException("Unable to get user with ID: " + userID + " from database.");
+        }
     }
 
     @Override
-    public UserDTO deleteUser(int userID) throws IUserDAO.DALException {
+    public UserDTO deleteUser(int userID) throws DatabaseException {
         UserDTO user = getUser(userID);
-        dao.deleteUser(userID);
-        return user;
+        try {
+            dao.deleteUser(userID);
+            return user;
+        }catch(IUserDAO.DALException e){
+            throw new DatabaseException("Unable to delete user with ID: " + userID + " from database.");
+        }
     }
 
 }

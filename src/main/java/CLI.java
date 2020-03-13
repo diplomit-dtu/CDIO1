@@ -1,5 +1,5 @@
 import dal.IUserDAO;
-import dal.UserDAOSQL;
+//import dal.UserDAOSQL;
 import dto.UserDTO;
 import func.IFunc;
 
@@ -17,11 +17,11 @@ public class CLI{
     }
 
     // Starts the commandline program
-    void run(){
+    void run() throws InterruptedException{
         mainMenu0();
     }
 
-    void mainMenu0(){
+    void mainMenu0() throws InterruptedException{
         int input = -1;
         while(input == -1){
             System.out.println(screen0Mainmenu());
@@ -38,32 +38,16 @@ public class CLI{
             }
         }
         if(input == 1){
-            try {
-                createUser1();
-            }catch(Exception e){
-                System.out.println(e);
-            }
+            createUser1();
         }else if(input == 2){
             listUsers2();
         }else if(input == 3){
-            try {
-                updateUser3();
-            } catch (IUserDAO.DALException e) {
-                e.printStackTrace();
-            }
+            updateUser3();
         }else if(input == 4){
-            try {
-                deleteUser4();
-            } catch (IUserDAO.DALException e) {
-                e.printStackTrace();
-            }
+            deleteUser4();
         }else if(input == 5){
             System.out.println("Lukker ned...");
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            }catch(InterruptedException e){
-                System.out.println(e);
-            }
+            TimeUnit.SECONDS.sleep(1);
             return;
         }
         mainMenu0();
@@ -79,7 +63,7 @@ public class CLI{
         return acc.toString();
     }
 
-    void createUser1() throws IUserDAO.DALException, InterruptedException {
+    void createUser1() throws InterruptedException {
         int id = -1;
         String input;
 
@@ -214,6 +198,7 @@ public class CLI{
         }
 
         StringBuilder firstLine = new StringBuilder();
+        firstLine.append("+");
         for(int i = 0; i<attWidth.size(); ++i){
             firstLine.append(repeatChar("-",attWidth.get(i)+2));
             firstLine.append("+");
@@ -225,9 +210,9 @@ public class CLI{
         List<UserDTO> list = new ArrayList<>();
         try {
             list = func.getUserList();
-        }catch(IUserDAO.DALException e){
+        }catch(IFunc.DatabaseException e){
             //TODO: better message
-            System.out.println("Wrong");
+            System.out.println(e.getMessage());
         }
         List<List<String>> rows = new ArrayList<>();
         for(int i = 0; i<list.size(); ++i){
@@ -265,12 +250,18 @@ public class CLI{
     // It also needs to follow the correct output format.
     // It needs an "save and exit to main menu" button
     // Sincerely Christoffer
-    void updateUser3() throws IUserDAO.DALException {
+    void updateUser3() {
         String useless;
         System.out.println("Indtast user ID, som skal Updateres: ");
         int startID = in.nextInt();
         useless = in.nextLine();
-        UserDTO user = func.getUser(startID);
+        UserDTO user = null;
+        try {
+            user = func.getUser(startID);
+        }catch (IFunc.DatabaseException e){
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("Hvilken værdi vil du ændre: ");
         System.out.println("1) ID");
         System.out.println("2) Navn");
@@ -319,7 +310,12 @@ public class CLI{
             default:
                 System.out.println("Fejl i Switch");
         }
-        func.deleteUser(startID);
+        try {
+            func.deleteUser(startID);
+        }catch(IFunc.DatabaseException e){
+            System.out.println(e.getMessage());
+        }
+
         try {
             func.createUser(user.getUserId(), user.getUserName(), user.getCpr(), user.getRoles());
         }catch(IFunc.UserFormatException e){
@@ -332,11 +328,16 @@ public class CLI{
 
     }
 
-    //TODO: this needs to follow the website as well Alexander, more specifically to print the user in the correct format as specificed by the website
+    //TODO: this needs to follow the website as well Alexander, more specifically to print the user in the
+    // correct format as specificed by the website, see userStrFormat method
     // Sincerely Christoffer
-    void deleteUser4() throws IUserDAO.DALException {
+    void deleteUser4() {
         System.out.println("Indtast user ID, som skal slettes: ");
-        System.out.println("User: " + func.deleteUser(in.nextInt()) + " er slettet" );
+        try {
+            System.out.println("User: " + func.deleteUser(in.nextInt()) + " er slettet");
+        }catch(IFunc.DatabaseException e){
+            System.out.println(e.getMessage());
+        }
     }
     String userStrFormat(UserDTO user){
         StringBuilder acc = new StringBuilder();
