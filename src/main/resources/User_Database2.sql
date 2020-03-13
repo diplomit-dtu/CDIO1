@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `Ini` VARCHAR(4) NULL,
     `CPR` VARCHAR(11) NULL,
     `Password` VARCHAR(100) NULL,
-    `Role` ENUM('Administratør', 'Farmaceut', 'Formand', 'Operatør') NULL,
+    `Role` ENUM('Administrator', 'Farmaceut', 'Formand', 'Operatør') NULL,
     PRIMARY KEY (`UserID`));
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
