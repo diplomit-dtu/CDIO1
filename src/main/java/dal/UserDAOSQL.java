@@ -165,7 +165,11 @@ public class UserDAOSQL implements IUserDAO {
             ps.setString(3, user.getIni());
             ps.setString(4, user.getCpr());
             ps.setString(5, user.getPassword());
-            ps.setString(6, user.getRoles().get(0));
+            try {
+                ps.setString(6, user.getRoles().get(0));
+            } catch (IndexOutOfBoundsException e){
+                ps.setString(6,null);
+            }
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DALException("Cannot create new user. Check for unique ID");
