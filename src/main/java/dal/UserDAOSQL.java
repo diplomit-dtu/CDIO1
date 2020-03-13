@@ -90,7 +90,7 @@ public class UserDAOSQL implements IUserDAO {
         }
         //Running the script
         sr.runScript(reader);
-        _url = "jdbc:mysql://localhost:3306/User_Database2" + _END;
+        _url = "jdbc:mysql://localhost:3306/User_Database" + _END;
         try{
             UserDTO user1 = new UserDTO(0,"Admin","Ad","0123456789","password","1");
             createUser(user1);
