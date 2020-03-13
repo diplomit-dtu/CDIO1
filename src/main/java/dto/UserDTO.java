@@ -2,17 +2,18 @@ package dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UserDTO implements Serializable{
 
   private static final long serialVersionUID = 4545864587995944260L;
   private int	userId;
-  private String userName;
-  private String ini;
-  private List<String> roles;
-  private String cpr;
-  private String password;
+  private String userName = "null";
+  private String ini = "null";
+  private List<String> roles = new ArrayList<>(Arrays.asList("null"));
+  private String cpr = "null";
+  private String password = "null";
 
 
   public UserDTO() {

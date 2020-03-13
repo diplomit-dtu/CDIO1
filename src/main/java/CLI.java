@@ -179,7 +179,7 @@ public class CLI{
     //| att1  | att2 | att3 |
     //+-------+------+------+
     void listUsers2(){
-
+        printTable(Arrays.asList("ID", "Username","Initials","CPR", "Kodeord"), getUserRows());
     }
     void printTable(List<String> attributes, List<List<String>> rows){
         if (attributes.size() == rows.get(0).size()){
@@ -190,22 +190,54 @@ public class CLI{
             attWidth.add(attributes.get(i).length());
         }
         for(int r = 0; r<rows.size();++r){
-            for(int elem = 0; elem<rows.get(r).size(); ++elem){
+            System.out.println(rows.get(r).toString());
+            for(int elem = 0; elem<attWidth.size(); ++elem){
                 if(attWidth.get(elem)<rows.get(r).get(elem).length()){
                     attWidth.set(elem, rows.get(r).get(elem).length());
                 }
             }
         }
-
         StringBuilder firstLine = new StringBuilder();
         firstLine.append("+");
         for(int i = 0; i<attWidth.size(); ++i){
-            firstLine.append(repeatChar("-",attWidth.get(i)+2));
+            StringBuilder tmp = new StringBuilder();
+            for(int k = 0; k<attWidth.get(i)+2; k++){
+                tmp.append("-");
+            }
+            firstLine.append(tmp);
             firstLine.append("+");
         }
+        String seperator = firstLine.toString();
 
-        System.out.println(firstLine.toString());
+        StringBuilder attBuilder = new StringBuilder();
+        attBuilder.append("| ");
+        for(int i = 0; i<attributes.size(); ++i){
+            StringBuilder spaces = new StringBuilder();
+            for(int k = 0; k<attWidth.get(i)-attributes.get(i).length(); k++){
+                spaces.append(" ");
+            }
+            attBuilder.append(attributes.get(i) + spaces + " | ");
+        }
+
+        System.out.println(seperator);
+        System.out.println(attBuilder.toString());
+        System.out.println(seperator);
+
+        for (int i = 0; i < rows.size(); ++i) {
+            StringBuilder rowBuilder = new StringBuilder();
+            rowBuilder.append("| ");
+            for(int att = 0; att<attributes.size(); ++att) {
+                StringBuilder spaces = new StringBuilder();
+                for (int k = 0; k < attWidth.get(att)-rows.get(i).get(att).length(); k++) {
+                    spaces.append(" ");
+                }
+                rowBuilder.append(rows.get(i).get(att) + spaces + " | ");
+            }
+            System.out.println(rowBuilder.toString());
+            System.out.println(seperator);
+        }
     }
+
     List<List<String>> getUserRows(){
         List<UserDTO> list = new ArrayList<>();
         try {
@@ -236,13 +268,6 @@ public class CLI{
         return rows;
     }
 
-    String repeatChar(String c,int rep){
-        StringBuilder acc = new StringBuilder();
-        for(int i = 0; i<rep; ++i) {
-            acc.append(c);
-        }
-        return c.toString();
-    }
 
     //TODO: This needs to be redone so that it actually follows our requirements given on the website Alexander.
     // This includes bringing it back to the Update page when a setting has been made,
