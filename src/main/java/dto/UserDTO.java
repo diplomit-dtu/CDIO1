@@ -20,7 +20,7 @@ public class UserDTO implements Serializable{
   public UserDTO() {
     this.roles = new ArrayList<>();
     this.password = newPassword();
-    
+
   }
 
   public UserDTO(int userId, String userName, String ini, String CPR, String password, String role){
@@ -29,7 +29,7 @@ public class UserDTO implements Serializable{
     this.userName = userName;
     this.ini = ini;
     this.cpr = CPR;
-    this.password = password;1
+    this.password = password;
     roles.add(role);
 
 
