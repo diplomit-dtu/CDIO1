@@ -29,7 +29,7 @@ public class UserDTO implements Serializable{
     this.userName = userName;
     this.ini = ini;
     this.cpr = CPR;
-    this.password = password;1
+    this.password = password;
     roles.add(role);
 
 
