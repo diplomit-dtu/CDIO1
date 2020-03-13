@@ -192,8 +192,17 @@ public class UserDAOSQL implements IUserDAO {
     }
 
     @Override
-    public void updateUser(UserDTO user) throws DALException {
-
+    public void updateUser(UserDTO newUser) throws DALException {
+        for (UserDTO user : getUserList())
+        {
+            if (user.getUserId() == newUser.getUserId())
+            {
+                deleteUser(user.getUserId());
+                createUser(newUser);
+                return;
+            }
+        }
+        throw new DALException("The user you tried to update didn't exist");
 
     }
     public void updateUser(UserDTO user, int oldID) throws DALException {

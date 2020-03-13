@@ -1,4 +1,3 @@
-import dal.IUserDAO;
 import dal.UserDAONonPersistent;
 import dto.UserDTO;
 import org.junit.jupiter.api.Test;
