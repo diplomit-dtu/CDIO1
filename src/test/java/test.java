@@ -5,7 +5,7 @@ public class test {
     @Test
     public void testAll(){
         NonPersistentTest nonPersistentTest = new NonPersistentTest();
-        SQLTest sqlTest = new SQLTest("root","Lambrecht99");
+        SQLTest sqlTest = new SQLTest("root","password");
     }
 
 }
