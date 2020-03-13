@@ -192,10 +192,23 @@ public class UserDAOSQL implements IUserDAO {
     @Override
     public void updateUser(UserDTO user) throws DALException {
 
-    }
 
+    }
+    public void updateUser(UserDTO user, int oldID) throws DALException {
+       deleteUser(oldID);
+       createUser(user);
+
+    }
     @Override
     public void deleteUser(int userId) throws DALException {
-
+        openConnection();
+        try {
+            PreparedStatement statement = _connection.prepareStatement("DELETE FROM users WHERE ID = " + userId);
+            statement.executeUpdate();
+            System.out.println("User is gone");
+        } catch (SQLException e) {
+           throw new DALException("Cant delete user with ID = " + userId + ", Check ID");
+        }
+        closeConnection();
     }
 }

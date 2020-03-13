@@ -6,6 +6,7 @@ import dal.UserDAOSQL;
 import func.Func;
 import func.IFunc;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
