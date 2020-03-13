@@ -387,9 +387,8 @@ public class CLI{
     int getInput(List<Integer> validChoices){
         int choice = -1;
         try{
-            choice = in.nextInt();
-            in.nextLine();
-        }catch(InputMismatchException e){
+            choice = Integer.parseInt(in.nextLine());
+        }catch(NumberFormatException e){
             return -1;
         }
 
