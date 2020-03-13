@@ -1,15 +1,4 @@
-package test.java;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
-import java.dal.UserDAONonPersistent;
-
-public class test {
-
-    NonPersistentTest nonPersistentTest = new NonPersistentTest();
-    SQLTest sqlTest = new SQLTest();
-
-}
+package test;
 
 public class NonPersistentTest {
 
@@ -30,34 +19,6 @@ public class NonPersistentTest {
         }
         assertTrue(message.equals("BrugerID skal være mellem 11 og 99 (inklusivt)"))
 
-
-    }
-
-    public void testGetUser(){
-
-    }
-
-    public void testGetUserList(){
-
-    }
-
-    public void testUpdateUser(){
-
-    }
-
-    public void testDeleteUser(){
-
-    }
-}
-
-public class SQLTest{
-
-    public SQLTest(){
-
-    }
-
-
-    public void testCreateUser(){
 
     }
 
