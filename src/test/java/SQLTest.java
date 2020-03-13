@@ -8,10 +8,26 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SQLTest{
+    private String username;
+    private String password;
+
+    public SQLTest(String SQLusername, String SQLpassword){
+        this.username = SQLusername;
+        this.password = SQLpassword;
+        testCreateUser();
+        testDeleteUser();
+        try {
+            testGetUserList();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        testGetUser();
+        testUpdateUser();
+    }
 
     @Test
     public void testCreateUser(){
-        IUserDAO userDAO = new UserDAOSQL("localhost","3306","user_database","root","trappeSumpTun");
+        IUserDAO userDAO = new UserDAOSQL("localhost","3306","user_database",username,password);
         String message = "";
 
         // When creating a user with a valid ID, i get no exception.
@@ -45,7 +61,7 @@ public class SQLTest{
     @Test
     public void testGetUser(){
         //setup
-        IUserDAO iUserDAO = new UserDAOSQL("localhost","3306","user_database","root","trappeSumpTun");
+        IUserDAO iUserDAO = new UserDAOSQL("localhost","3306","user_database",username,password);
 
         UserDTO user;
         String message = "";
@@ -69,7 +85,7 @@ public class SQLTest{
 
     @Test
     public void testGetUserList() throws IUserDAO.DALException {
-        IUserDAO iUserDAO = new UserDAOSQL("localhost","3306","user_database","root","trappeSumpTun");
+        IUserDAO iUserDAO = new UserDAOSQL("localhost","3306","user_database",username,password);
         try {
             UserDTO user1 = new UserDTO(20, "Name", "Na", "123456-1234", "password", "Admin");
             iUserDAO.createUser(user1);
@@ -93,7 +109,7 @@ public class SQLTest{
 
     @Test
     public void testDeleteUser(){
-        IUserDAO userDAO = new UserDAOSQL("localhost","3306","user_database","root","trappeSumpTun");
+        IUserDAO userDAO = new UserDAOSQL("localhost","3306","user_database",username,password);
         String message = "User Created.";
 
         // When creating a user with a valid ID, i get no exception.

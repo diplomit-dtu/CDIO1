@@ -1,7 +1,12 @@
+import org.junit.jupiter.api.Test;
+
 public class test {
 
-    NonPersistentTest nonPersistentTest = new NonPersistentTest();
-    SQLTest sqlTest = new SQLTest();
+    @Test
+    public void testAll(){
+        NonPersistentTest nonPersistentTest = new NonPersistentTest();
+        SQLTest sqlTest = new SQLTest("username","password");
+    }
 
 }
 

@@ -12,7 +12,21 @@ import static org.junit.Assert.*;
 public class NonPersistentTest {
 
     public NonPersistentTest(){
-
+        testCreateUser();
+        try {
+            testDeleteUser();
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
+        try {
+            testGetUserList();
+        } catch (Exception ignored){}
+        testGetUser();
+        try {
+            testUpdateUser();
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
