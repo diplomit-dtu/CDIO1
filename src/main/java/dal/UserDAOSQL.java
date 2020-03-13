@@ -90,7 +90,7 @@ public class UserDAOSQL implements IUserDAO {
         }
         //Running the script
         sr.runScript(reader);
-        _url = "jdbc:mysql://localhost:3306/User_Database2" + _END;
+        _url = "jdbc:mysql://localhost:3306/User_Database" + _END;
         try{
             UserDTO user1 = new UserDTO(0,"Admin","Ad","0123456789","password","1");
             createUser(user1);
@@ -171,10 +171,6 @@ public class UserDAOSQL implements IUserDAO {
             ps.setString(4, user.getCpr());
             ps.setString(5, user.getPassword());
             try {
-                for (String s :
-                        user.getRoles()) {
-                    System.out.println(s);
-                }
                 ps.setString(6, user.getRoles().get(0));
             } catch (IndexOutOfBoundsException e){
                 ps.setString(6,null);
