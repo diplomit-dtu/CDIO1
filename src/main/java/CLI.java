@@ -21,6 +21,10 @@ public class CLI{
         mainMenu0();
     }
 
+    /**
+     * Start screen, main menu.
+     * @throws InterruptedException
+     */
     void mainMenu0() throws InterruptedException{
         int input = -1;
         while(input == -1){
@@ -63,6 +67,10 @@ public class CLI{
         return acc.toString();
     }
 
+    /**
+     * Option 1 from mainmenu: create user
+     * @throws InterruptedException
+     */
     void createUser1() throws InterruptedException {
         int id = -1;
         String input;
@@ -177,9 +185,19 @@ public class CLI{
     //+-------+------+------+
     //| att1  | att2 | att3 |
     //+-------+------+------+
+
+    /**
+     * Option 2 from main menu: List users
+     */
     void listUsers2(){
         printTable(Arrays.asList("ID", "Username","Initials","CPR", "Kodeord"), getUserRows());
     }
+
+    /**
+     * Given attributes, and subsequent tubles (rows) it will print a SQL-like table
+     * @param attributes
+     * @param rows
+     */
     void printTable(List<String> attributes, List<List<String>> rows){
         if (attributes.size() == rows.get(0).size()){
             throw new AssertionError("The number of attributes should always be equal to the row size");
@@ -269,10 +287,14 @@ public class CLI{
 
     //TODO: This needs to be redone so that it actually follows our requirements given on the website Alexander.
     // This includes bringing it back to the Update page when a setting has been made,
-    // and _not_ bring it to main menu.
+    // and _not_ bring it to main menu. See createUser
     // It also needs to follow the correct output format.
     // It needs an "save and exit to main menu" button
     // Sincerely Christoffer
+
+    /**
+     * Option 3 from main menu
+     */
     void updateUser3() {
         String useless;
         System.out.println("Indtast user ID, som skal Updateres: ");
@@ -354,6 +376,10 @@ public class CLI{
     //TODO: this needs to follow the website as well Alexander, more specifically to print the user in the
     // correct format as specificed by the website, see userStrFormat method
     // Sincerely Christoffer
+
+    /**
+     * Option 4 from main menu.
+     */
     void deleteUser4() {
         System.out.println("Indtast user ID, som skal slettes: ");
         try {
@@ -384,6 +410,13 @@ public class CLI{
     String promptInput(){
         return "Indtast valgmulighed: ";
     }
+
+    /**
+     * Takes a list of valid choice, and will return -1 if
+     * the user does not enter either a valid option or something that is not string-formatted
+     * @param validChoices
+     * @return
+     */
     int getInput(List<Integer> validChoices){
         int choice = -1;
         try{
@@ -397,6 +430,8 @@ public class CLI{
         }
         return choice;
     }
+
+
     String getSInput(List<String> validChoices){
         String choice = "";
         choice = in.nextLine();
