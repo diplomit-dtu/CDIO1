@@ -333,7 +333,7 @@ public class CLI{
                 System.out.println("5) Role");
                 System.out.println("6) Gem og afslut");
                 System.out.println("7) Afslut uden at gemme");
-                x = getInput(Arrays.asList(1, 2, 3, 4, 5, 6));
+                x = getInput(Arrays.asList(1, 2, 3, 4, 5, 6,7));
             switch (x) {
                 case 1:
                     System.out.println("Indtast nyt ID:");
