@@ -159,7 +159,6 @@ public class UserDAOSQL implements IUserDAO {
                 list.get(list.size() - 1).addRole(resultSet.getString("Role"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DALException("Could not get user list");
         }
         closeConnection();
@@ -185,7 +184,6 @@ public class UserDAOSQL implements IUserDAO {
             }
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new DALException("Cannot create new user. Check for unique ID");
         }
 

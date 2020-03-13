@@ -1,9 +1,13 @@
-package test;
-
 import dal.IUserDAO;
 import dal.UserDAONonPersistent;
 import dto.UserDTO;
 import org.junit.jupiter.api.Test;
+
+import dal.IUserDAO.*;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class NonPersistentTest {
 
@@ -31,7 +35,7 @@ public class NonPersistentTest {
             UserDTO user1 = new UserDTO(20, "Name", "Na", "123456-1234", "password", "Admin");
             NonPersistent.createUser(user1);
             message = "User Created.";
-        } catch (DALException E) {
+        } catch (Exception E) {
             message = E.getMessage();
         }
         assertEquals(message, "User Created.");
@@ -56,20 +60,20 @@ public class NonPersistentTest {
         try {
             UserDTO user1 = new UserDTO(20, "Name", "Na", "123456-1234", "password", "Admin");
             NonPersistent.createUser(user1);
-        } catch (DALException E){
+        } catch (DALException ignored){
 
         }
 
         UserDTO user;
-        String message;
+        String message = "";
         //When trying to get a user that exists, i get the user.
 
         try {
             user = NonPersistent.getUser(20);
+            assertNotNull(user);
         } catch (DALException E){
             message = E.getMessage();
         }
-        assertFalse(user == null);
 
         //When trying to get a user that doesn't exist, i get an exception.
         try {
@@ -77,12 +81,12 @@ public class NonPersistentTest {
         } catch (DALException E){
             message = E.getMessage();
         }
-        assertEquals(message, "Der findes ingen bruger med ID -1")
+        assertEquals(message, "Der findes ingen bruger med ID -1");
 
     }
 
     @Test
-    public void testGetUserList(){
+    public void testGetUserList() throws DALException {
         //setup (When creating an object of UserDAONonPersistent, 3 dummy users are initialized automatically)
         UserDAONonPersistent NonPersistent = new UserDAONonPersistent();
         try {
@@ -96,13 +100,13 @@ public class NonPersistentTest {
 
         List<UserDTO> users = NonPersistent.getUserList();
 
-        assertTrue(users.size() == 4);
-        assertTrue(users.get(3).getUserId() == 20);
+        assertEquals(4,users.size());
+        assertEquals(20, users.get(3).getUserId());
 
     }
 
     @Test
-    public void testUpdateUser(){
+    public void testUpdateUser() throws DALException {
         //setup
         UserDAONonPersistent NonPersistent = new UserDAONonPersistent();
         try {
@@ -112,7 +116,7 @@ public class NonPersistentTest {
 
         }
 
-        String message;
+        String message = "";
 
         // When trying to update a user that doesn't exist, i get an exception
 
@@ -138,7 +142,7 @@ public class NonPersistentTest {
     }
 
     @Test
-    public void testDeleteUser(){
+    public void testDeleteUser() throws DALException {
         //setup
         UserDAONonPersistent NonPersistent = new UserDAONonPersistent();
         try {
@@ -148,7 +152,7 @@ public class NonPersistentTest {
 
         }
 
-        String message;
+        String message = "";
 
         //When deleting a user, it is removed from the user-list.
         try {
@@ -157,8 +161,8 @@ public class NonPersistentTest {
             message = E.getMessage();
         }
 
-        assertTrue(message == null);
-        assertTrue(NonPersistent.getUserList().size() == 3);
+        assertEquals(message,"");
+        assertEquals(3, NonPersistent.getUserList().size());
 
         //When trying to delete a user that doesn't exist, i get an exception.
 
@@ -166,9 +170,10 @@ public class NonPersistentTest {
             NonPersistent.deleteUser(-1);
         } catch (DALException E){
             message = E.getMessage();
-        }
 
-        assertEquals("Der fandtes ingen bruger med ID -1");
+        }
+        assertEquals(message,"Der fandtes ingen bruger med ID -1");
+
 
     }
 }
